@@ -19,7 +19,7 @@
     "generate-salts": true,
     "secure-http": true
   },
-  "require": {
+  "require-dev": {
     "webdevstudios/cmb2": "*"
   },
   "autoload": {
