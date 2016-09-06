@@ -26,8 +26,7 @@
     }
   ],
   "require": {
-    "webdevstudios/cmb2": "dev-master",
-    "minimum-stability": "dev"
+    "webdevstudios/cmb2": "@dev"
   },
   "autoload": {
     "files": ["vendor/webdevstudios/cmb2/init.php"]

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1fc5c9555bd7dd28a07a42738050dc64",
-    "content-hash": "93ef847066fec8c54559fe72968eebdb",
+    "hash": "76978b1af9e52f756425223aeae708be",
+    "content-hash": "228419b284e0d6080d2552f7f2055232",
     "packages": [
         {
             "name": "webdevstudios/cmb2",
@@ -55,8 +55,10 @@
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "dev",
-    "stability-flags": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "webdevstudios/cmb2": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
