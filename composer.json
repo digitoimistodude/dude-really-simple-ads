@@ -20,7 +20,7 @@
     "secure-http": true
   },
   "require": {
-    "webdevstudios/cmb2": "dev-master"
+    "webdevstudios/cmb2": "*"
   },
   "autoload": {
     "files": ["vendor/webdevstudios/cmb2/init.php"]
