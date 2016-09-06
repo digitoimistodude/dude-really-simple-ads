@@ -1,0 +1,7 @@
+.git/
+.env
+.env*
+!.env.example
+vendor/*
+!vendor/.gitkeep
+node_modules

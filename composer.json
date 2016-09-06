@@ -1,0 +1,37 @@
+{
+  "name": "digitoimistodude/dude-really-simple-ads",
+  "type": "project",
+  "license": "MIT",
+  "description": "A simple way to manage, track and show ads",
+  "homepage": "https://github.com/digitoimistodude/dude-really-simple-ads",
+  "authors": [
+    {
+      "name": "Timi Wahalahti",
+      "email": "timi@dude.fi",
+      "homepage": "https://github.com/timiwahalahti"
+    }
+  ],
+   "config": {
+    "preferred-install": "dist",
+    "generate-salts": true,
+    "secure-http": true
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org",
+      "minimum-stability": "dev"
+    }
+  ],
+  "require": {
+    "webdevstudios/cmb2": "dev-master"
+  },
+  "autoload": {
+    "files": ["vendor/webdevstudios/cmb2/init.php"]
+  },
+  "extra": {
+    "installer-paths": {
+      "vendor/{$name}/": ["webdevstudios/cmb2"]
+    }
+  }
+}
