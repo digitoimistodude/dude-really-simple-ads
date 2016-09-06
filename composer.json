@@ -1,6 +1,6 @@
 {
   "name": "digitoimistodude/dude-really-simple-ads",
-  "type": "wordpress-plugin",
+  "type": "project",
   "license": "MIT",
   "description": "A simple way to manage, track and show ads",
   "homepage": "https://github.com/digitoimistodude/dude-really-simple-ads",
