@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e6977b2c8c111d10535f8d94c4999803",
-    "content-hash": "2be06a6b9859145aebeb0e27054cab35",
+    "hash": "3d268e1d08653632bfbcc39fcc9e725c",
+    "content-hash": "f74ff090a80bb658e3459df56b7cc6a9",
     "packages": [
         {
             "name": "webdevstudios/cmb2",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WebDevStudios/CMB2.git",
-                "reference": "89b2939fdce67dceee83492477aa764c20504f25"
+                "reference": "0aaa7c1bcd40e228df8251a838f35856551a3d94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WebDevStudios/CMB2/zipball/89b2939fdce67dceee83492477aa764c20504f25",
-                "reference": "89b2939fdce67dceee83492477aa764c20504f25",
+                "url": "https://api.github.com/repos/WebDevStudios/CMB2/zipball/0aaa7c1bcd40e228df8251a838f35856551a3d94",
+                "reference": "0aaa7c1bcd40e228df8251a838f35856551a3d94",
                 "shasum": ""
             },
             "require": {
@@ -50,12 +50,12 @@
                 "plugin",
                 "wordpress"
             ],
-            "time": "2016-08-23 01:09:10"
+            "time": "2016-09-06 13:33:49"
         }
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
         "webdevstudios/cmb2": 20
     },
