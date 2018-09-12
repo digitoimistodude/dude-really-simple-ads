@@ -154,7 +154,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 			return;
 
 		$utm = array();
-		$utm['utm_source'] = apply_filters( 'drsa_utm_source', get_bloginfo( 'page_name' ) );
+		$utm['utm_source'] = apply_filters( 'drsa_utm_source', sanitize_title( get_bloginfo( 'page_name' ) ) );
 		$utm['utm_medium'] = apply_filters( 'drsa_utm_medium/'.$place, apply_filters( 'drsa_utm_medium', $place ) );
 
 		if( $from === 'campaign' ) {
