@@ -100,6 +100,6 @@ class Dude_Really_Simple_Ads {
 	 * @version 0.1.0
 	 */
 	public function register_scripts() {
-		wp_register_script( 'drsa_ad_tracking', plugin_dir_url( dirname( __FILE__ ) ).'public/js/script.min.js' );
+		wp_register_script( 'drsa_ad_tracking', plugin_dir_url( dirname( __FILE__ ) ).'public/js/script.js' );
 	} // end register_scripts
 } // end class

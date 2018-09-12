@@ -9,7 +9,9 @@ jQuery(document).ready(function($) {
 	}
 
 	$(drsa.click_counter_element).click(function(e){
+		e.preventDefault();
 		drsa_make_click_call();
+		window.location.href = $(this).attr('href');
 	});
 });
 
