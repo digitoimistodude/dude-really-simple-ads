@@ -17,8 +17,7 @@
 if( !defined( 'ABSPATH' )  )
 	exit();
 
-// We use composer to loading and keeping CMB2 up-to-date
-require __DIR__.'/vendor/autoload.php';
+require plugin_dir_path( __FILE__ ).'includes/cmb2/init.php';
 
 // Check that plugin isn't active already for some odd reason
 if( !function_exists( 'run_drsa' ) ) {
