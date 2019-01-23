@@ -17,6 +17,7 @@ By using this code bases, you agree that the anything can change to a different 
 
 ## Features
 Basic feature list includes
+
 - Multiple ad places
 - Sheculed ads with start and end time
 - Campaigns containing multiple ads
@@ -63,7 +64,7 @@ if ( function_exists( 'get_the_active_ad' ) ) {
 }
 
 if ( $ad ) {
-    echo '<a href="<?php echo $ad[target] ?>"><img src="<?php echo $ad[src] ?>" class="ad ad-place-<?php echo $ad[place] ?>"/></a>';
+    echo '<a href="' . $ad['target'] . '"><img src="' . $ad['src'] . '" class="ad ad-place-' . $ad['place'] . '"/></a>';
 }
 ```
 

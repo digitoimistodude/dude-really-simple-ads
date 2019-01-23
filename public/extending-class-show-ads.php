@@ -5,7 +5,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 		parent::__construct();
 	} // end __construct
 
-	public function get_active_ad( $place = null ) {
+	public static function get_active_ad( $place = null ) {
 		if( is_null( $place ) )
 			return false;
 
@@ -58,7 +58,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 		return $return;
 	} // end get_active_ad
 
-	public function get_campaign_ad( $campaign = null, $place = null ) {
+	public static function get_campaign_ad( $campaign = null, $place = null ) {
 		if( is_null( $campaign ) || is_null( $place ) )
 			return false;
 
@@ -108,7 +108,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 		return $return;
 	} // end get_campaign_ad
 
-	public function get_active_campaign( $place = null ) {
+	public static function get_active_campaign( $place = null ) {
 		if( is_null( $place ) )
 			return false;
 
@@ -149,7 +149,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 		return $return;
 	} // end get_active_campaign
 
-	public function build_target_with_utm( $ad = null, $from = 'single', $place = null ) {
+	public static function build_target_with_utm( $ad = null, $from = 'single', $place = null ) {
 		if( empty( $ad ) || empty( $place ) )
 			return;
 
