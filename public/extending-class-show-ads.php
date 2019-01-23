@@ -227,7 +227,7 @@ if( !function_exists( 'get_the_active_ad' ) ) {
 
 		$use_utm = apply_filters( 'drsa_use_utm', true );
 		$use_utm = apply_filters( 'drsa_use_utm/'.$place, true );
-		$use_utm = apply_filters( 'drsa_use_utm/ad/'$ad['id'], true );
+		$use_utm = apply_filters( 'drsa_use_utm/ad/'.$ad['id'], true );
 
 		if( $use_utm && !empty( $ad['target'] ) )
 			$ad['target'] = DRSA_Show_ads::build_target_with_utm( $ad, $from, $place );
