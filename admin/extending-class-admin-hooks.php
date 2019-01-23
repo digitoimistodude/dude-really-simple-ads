@@ -13,7 +13,7 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function reorder_metaboxes() {
+	public static function reorder_metaboxes() {
 		add_meta_box( 'postimagediv', __( 'Mainos', 'dude-really-simple-ads' ), 'post_thumbnail_meta_box', 'drsa_ad', 'side', 'high' );
 		add_meta_box( 'drsa_campaignsdiv', __( 'Kampanjat', 'dude-really-simple-ads' ), 'post_categories_meta_box', 'drsa_ad', 'normal', 'low', array( 'taxonomy' => 'drsa_campaigns' ) );
 		add_meta_box( 'authordiv', __( 'Author', 'dude-really-simple-ads' ), 'post_author_meta_box', 'drsa_ad', 'side', 'low' );
@@ -27,7 +27,7 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function change_featured_image_links( $content ) {
+	public static function change_featured_image_links( $content ) {
 		// @codingStandardsIgnoreStart
 		$content = str_replace( __( 'Set featured image' ), __( 'Lisää mainoksen sisältö', 'dude-really-simple-ads' ), $content );
 		$content = str_replace( __( 'Remove featured image' ), __( 'Poista mainoksen sisältö', 'dude-really-simple-ads' ), $content );
@@ -60,7 +60,7 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function validate_feature_image_size( $post_id, $post, $update ) {
+	public static function validate_feature_image_size( $post_id, $post, $update ) {
 		if ( 'drsa_ad' !== $post->post_type ) {
 			return;
     }
@@ -106,7 +106,7 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function admin_notices() {
+	public static function admin_notices() {
 
 		// If ad is valid, do not continue
 		$show_ad = get_post_meta( get_the_id(), '_drsa_ad_show', true );
@@ -131,7 +131,7 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function remove_quick_edit( $actions ) {
+	public static function remove_quick_edit( $actions ) {
 		global $post;
 
 		if ( 'drsa_ad' === $post->post_type ) {
