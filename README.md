@@ -70,6 +70,6 @@ If you have ideas about the plugin or spot an issue, please let us know. Before 
 
 ## TODO
 
-[] better inline commenting
-[] fix old files for phpcs
-[] this documentation
+[ ] better inline commenting
+[ ] fix old files for phpcs
+[ ] this documentation
