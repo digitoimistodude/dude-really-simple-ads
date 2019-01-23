@@ -5,15 +5,15 @@
 
 ## Table of contents
 
-- [Please note before using](#please-note-before-using)
 - [Features](#features)
 - [Usage](#usage)
     - [Register ad places](#register-ad-places)
     - [Get active ad](#get-active-ad)
     - [Adding a shortcode to embed ads into content](#adding-a-shortcode-to-embed-ads-into-content)
-    - [Hooks](#hooks)
+- [Hooks](#hooks)
     - [Set default ad and link](#set-default-ad-and-link)
     - [Disable UTM tags in ad target url](#disable-utm-tags-in-ad-target-url)
+    - [Disable or change ad view throttle time](#disable-or-change-ad-view-throttle-time)
 - [Changelog](#changelog)
 - [Contributing](#contributing)
 - [TODO](#todo)
