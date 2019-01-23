@@ -6,7 +6,7 @@ class DRSA_Places extends Dude_Really_Simple_Ads {
 		parent::__construct();
 	} // end __construct
 
-	public function get_ad_placements() {
+	public static function get_ad_placements() {
 		$places = apply_filters( 'drsa_ad_placement_sizes', array() );
 		$options = array();
 
@@ -19,7 +19,7 @@ class DRSA_Places extends Dude_Really_Simple_Ads {
 		return $options;
 	} // end get_ad_placements
 
-	public function get_ad_placement_options( $show_size = true ) {
+	public static function get_ad_placement_options( $show_size = true ) {
 		$places = self::get_ad_placements();
 		$options = array();
 

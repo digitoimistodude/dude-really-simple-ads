@@ -58,7 +58,7 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
 	        'name'				=> __( 'Käytä mainospaikalla', 'dude-really-simple-ads' ),
 	        'id'					=> $prefix,
 	        'type'				=> 'select',
-					'options'			=> array( 'DRSA_Places', 'get_ad_placement_options' )
+					'options_cb'	=> array( 'DRSA_Places', 'get_ad_placement_options' )
 	    ) );
 		}
 
@@ -144,7 +144,7 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
 	        'name'				=> __( 'Käytä mainospaikalla', 'dude-really-simple-ads' ),
 	        'id'					=> $prefix,
 	        'type'				=> 'select',
-					'options'			=> array( 'DRSA_Places', 'get_ad_placement_options' )
+					'options_cb'	=> array( 'DRSA_Places', 'get_ad_placement_options' )
 	    ) );
 		}
 	} // end add_ad_campaign_metabox
