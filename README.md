@@ -49,6 +49,26 @@ function myprefix_register_ad_spots() {
 }
 ```
 
+### Get active ad
+Getting the active ad is fairly simple, just use `get_the_active_ad` function and pass the used ad place as a paremeter.
+
+If there is active campaign for that ad place, a random image from that campaign will be returned. Note that campaign will bypass single ad schedule over the campaings schedule. When there is no active campaign, active single ad for place is returned. Default ad and link will be returned if no active campaign or ad are found, if there is no default then return is false.
+
+Function returns array containing the ad place, image src and target. Simple usage example is below, but you should modify it according to your needs. Always check the function existance.
+
+```php
+$ad = false;
+if ( function_exists( 'get_the_active_ad' ) ) {
+    $ad = get_the_active_ad( 'frontpage-default' );
+}
+
+if ( $ad ) {
+    echo '<a href="<?php echo $ad[target] ?>"><img src="<?php echo $ad[src] ?>" class="ad ad-place-<?php echo $ad[place] ?>"/></a>';
+}
+```
+
+### Campaigns
+
 ### Set default ad and link
 If theres no active ads for the place, you can set default image and link for the ad place in question with two different hooks.
 
