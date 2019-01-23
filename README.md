@@ -5,13 +5,18 @@
 
 ## Table of contents
 
-1. [Please note before using](#please-note-before-using)
-3. [Features](#features)
-4. [Usage](#usage)
-5. [Hooks](#hooks)
-6. [Changelog](#hangelog)
-7. [Contributing](#contributing)
-8. [TODO](#TODO)
+- [Please note before using](#please-note-before-using)
+- [Features](#features)
+- [Usage](#usage)
+    - [Register ad places](#register-ad-places)
+    - [Get active ad](#get-active-ad)
+    - [Adding a shortcode to embed ads into content](#adding-a-shortcode-to-embed-ads-into-content)
+    - [Hooks](#hooks)
+    - [Set default ad and link](#set-default-ad-and-link)
+    - [Disable UTM tags in ad target url](#disable-utm-tags-in-ad-target-url)
+- [Changelog](#changelog)
+- [Contributing](#contributing)
+- [TODO](#todo)
 
 ## Please note before using
 By using this code bases, you agree that the anything can change to a different direction without a warning.
@@ -20,19 +25,21 @@ By using this code bases, you agree that the anything can change to a different 
 Basic feature list includes
 
 - Multiple ad places
-- Sheculed ads with start and end time
 - Campaigns containing multiple ads
-- Simple view and click counter per ad (JavaScript)
+- Sheculed ads with start and end time
+- Sheculed campaigns with start and end time
+- Simple view and click counter per ad _(JavaScript)_
+- Ad view throttle prevention, so F5 will not bump up the display count _(JavaScript)_
 - Private notes for ads and campaigns
 
 ## Usage
 
 ### Register ad places
-Ad places are registered with `drsa_ad_placement_sizes` hook. You should pass nested array containing one array element per each ad place. See exmaple below.
+Ad places are registered with `drsa_ad_placement_sizes` hook. You should pass nested array containing one array element per each ad place. See basic exmaple below.
 
 ```php
-add_filter( 'drsa_ad_placement_sizes', 'myprefix_register_ad_spots' );
-function myprefix_register_ad_spots() {
+add_filter( 'drsa_ad_placement_sizes', 'myprefix_register_ad_places' );
+function myprefix_register_ad_places() {
     $spots = array(
         array(
             // title whichs shows when adding ads
@@ -54,10 +61,9 @@ function myprefix_register_ad_spots() {
 ### Get active ad
 Getting the active ad is fairly simple, just use `get_the_active_ad` function and pass the used ad place as a paremeter.
 
-If there is active campaign for that ad place, a random image from that campaign will be returned. Note that campaign will bypass single ad schedule over the campaings schedule. When there is no active campaign, active single ad for place is returned. Default ad and link will be returned if no active campaign or ad are found, if there is no default then return is false.
+If there is active campaign for that ad place, a random active ad assigned to selected place will be returned. When there is no active campaign, active single ad for place is returned. Default ad and link will be returned if no active campaign or ad are found, if there is no default then return is false.
 
-Function returns array containing the ad place name, image src, target and click counter class. Simple usage example is below, but you should modify it according to your needs. Click counter class needs to be in the same element with the target href.
-
+When there is ad, return is array containing the ad place name, image src, target address and click counter class. Simple usage example is below, but you can modify it according to your needs. Click counter class needs to be in the same element with the target href.
 
 ```php
 $ad = false;
@@ -79,13 +85,14 @@ You can make your own shortcode to get ads everywhere you want, for example into
 add_shortcode( 'ad', 'myprefix_shortcode_show_ad' );
 function myprefix_shortcode_show_ad( $atts ) {
     if ( ! function_exists( 'get_the_active_ad' ) ) {
-        return;
+        return; // plugin not active, bail
     }
 
     if ( empty( $atts ) ) {
-        return;
+        return; // no attributes to shortcode, bail
     }
 
+    // no ad place defined, show error to user and bail if visitor
     if ( ! isset( $atts['place'] ) ) {
         if ( is_user_logged_in() && current_user_can( 'edit_others_posts' ) ) {
             return __( 'No ad place defined', 'textdomain' );
@@ -94,8 +101,10 @@ function myprefix_shortcode_show_ad( $atts ) {
         }
     }
 
+    // get the ad
     $ad = get_the_active_ad( $atts['place'] );
 
+    // no active ad, show error to user and bail if visitor
     if ( ! $ad ) {
         if ( is_user_logged_in() && current_user_can( 'edit_others_posts' ) ) {
             return __( 'No active ads or campaigns', 'textdomain' );
@@ -104,26 +113,30 @@ function myprefix_shortcode_show_ad( $atts ) {
         }
     }
 
+    // return ad html
     return '<a href="' . $ad['target'] . '" target="_blank" class="' . $ad['click_counter_class'] . '"><img src="' . $ad['src'] . '" class="ad ad-place-' . $ad['place'] . '"/></a>';
 }
 ```
 
 ### Hooks
+Plugin contains a set of hooks for you to use and modify behavior of plugin.
 
 ### Set default ad and link
-If theres no active ads for the place, you can set default image and link for the ad place in question with two different hooks.
+If there is no active ads for the place, you can set default image and link for the ad place in question with two different hooks.
 
 Use filter `drsa_default_ad/{place-id}` to set default ad image src.
 Use filter `drsa_default_ad_target/{place-id}` to set default ad address.
 
 ### Disable UTM tags in ad target url
-By default UTM tags are inserted automatically to the ad target address, use filter `drsa_use_utm` to disable it.
+By default [UTM](https://support.google.com/analytics/answer/1033863#parameters) tags are inserted automatically to the ad target address, use filter `drsa_use_utm` to disable it.
 
-`add_filter( 'drsa_use_utm', '__return_false' );`
+To disable globally, use `add_filter( 'drsa_use_utm', '__return_false' );`
+To disable by ad place, use `add_filter( 'drsa_use_utm\{place-id}', '__return_false' );`
+To disable by single ad, use `add_filter( 'drsa_use_utm\ad\{ad-id}', '__return_false' );`
 
 ## Changelog
 
-Changelog can be found from [releases page](https://github.com/digitoimistodude/air-helper/releases).
+Changelog can be found from [releases page](https://github.com/digitoimistodude/dude-really-simple-ads/releases).
 
 ## Contributing
 
@@ -133,4 +146,3 @@ If you have ideas about the plugin or spot an issue, please let us know. Before 
 
 [ ] better inline commenting
 [ ] fix old files for phpcs
-[ ] this documentation
