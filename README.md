@@ -118,7 +118,7 @@ function myprefix_shortcode_show_ad( $atts ) {
 }
 ```
 
-### Hooks
+## Hooks
 Plugin contains a set of hooks for you to use and modify behavior of plugin.
 
 ### Set default ad and link
@@ -133,6 +133,13 @@ By default [UTM](https://support.google.com/analytics/answer/1033863#parameters)
 To disable globally, use `add_filter( 'drsa_use_utm', '__return_false' );`
 To disable by ad place, use `add_filter( 'drsa_use_utm\{place-id}', '__return_false' );`
 To disable by single ad, use `add_filter( 'drsa_use_utm\ad\{ad-id}', '__return_false' );`
+
+### Disable or change ad view throttle time
+If visitor reloads the page or visits in the same page again within 30 seconds after first visit, the new visit is not counted to ad views. If same ad is shown in multiple pages, each page has it's own throttle prevention. For exmaple if ad is in sidebar, reload within 30 seconds in frontpage does not count new view but visit in another page will.
+
+This is simple prevention to ensure that view count is somewhat accurate.
+
+Change the throttle time with filter `drsa_counter_cookie_timeout`, return thtrottle time in milliseconds. To disable the feature, return zero.
 
 ## Changelog
 

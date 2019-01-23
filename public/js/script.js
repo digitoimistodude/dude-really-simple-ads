@@ -2,10 +2,13 @@ jQuery(document).ready(function($) {
 	var d = new Date();
 	var time_current = d.getTime();
 
+	console.log( window.location.pathname );
+
 	$.each( drsa.ads, function( key, ad ) {
 		// make the cookie key for this ad
 		// cookie contains the place and id in case there is campign and ad changes
-		var ad_count_cookie = 'drsa_count_' + ad.place + ad.adid;
+		// also key should contain current page, in case of ad used accross site
+		var ad_count_cookie = 'drsa_count_' + ad.place + ad.adid + '_' + window.location.pathname;
 		var time_saved = sessionStorage.getItem( ad_count_cookie );
 
 		// if cookie timeout throttle is past, send view
