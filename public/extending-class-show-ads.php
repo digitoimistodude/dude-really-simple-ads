@@ -220,9 +220,16 @@ if( !function_exists( 'get_the_active_ad' ) ) {
 			$ad['id'] = 0;
 		}
 
-		// TODO: return false if no ad or fallback
+		// No active ad or default, return empty.
+		if ( empty( $ad['src'] ) ) {
+			return;
+		}
 
-		if( apply_filters( 'drsa_use_utm', true ) && !empty( $ad['target'] ) )
+		$use_utm = apply_filters( 'drsa_use_utm', true );
+		$use_utm = apply_filters( 'drsa_use_utm/'.$place, true );
+		$use_utm = apply_filters( 'drsa_use_utm/ad/'$ad['id'], true );
+
+		if( $use_utm && !empty( $ad['target'] ) )
 			$ad['target'] = DRSA_Show_ads::build_target_with_utm( $ad, $from, $place );
 
 		DRSA_Show_Ads::$visible_ads[] = array(
