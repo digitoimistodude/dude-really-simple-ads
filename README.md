@@ -55,7 +55,8 @@ Getting the active ad is fairly simple, just use `get_the_active_ad` function an
 
 If there is active campaign for that ad place, a random image from that campaign will be returned. Note that campaign will bypass single ad schedule over the campaings schedule. When there is no active campaign, active single ad for place is returned. Default ad and link will be returned if no active campaign or ad are found, if there is no default then return is false.
 
-Function returns array containing the ad place, image src and target. Simple usage example is below, but you should modify it according to your needs. Always check the function existance.
+Function returns array containing the ad place name, image src, target and click counter class. Simple usage example is below, but you should modify it according to your needs. Click counter class needs to be in the same element with the target href.
+
 
 ```php
 $ad = false;
@@ -64,9 +65,11 @@ if ( function_exists( 'get_the_active_ad' ) ) {
 }
 
 if ( $ad ) {
-    echo '<a href="' . $ad['target'] . '"><img src="' . $ad['src'] . '" class="ad ad-place-' . $ad['place'] . '"/></a>';
+    echo '<a href="' . $ad['target'] . '" target="_blank" class="' . $ad['click_counter_class'] . '"><img src="' . $ad['src'] . '" class="ad ad-place-' . $ad['place'] . '"/></a>';
 }
 ```
+
+_Always check the existance of function._
 
 ### Campaigns
 
