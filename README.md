@@ -16,6 +16,12 @@
 By using this code bases, you agree that the anything can change to a different direction without a warning.
 
 ## Features
+Basic feature list includes
+- Multiple ad places
+- Sheculed ads with start and end time
+- Campaigns containing multiple ads
+- Simple view and click counter per ad
+- Private notes for ads and campaigns
 
 ## Usage
 
