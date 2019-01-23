@@ -78,6 +78,18 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 				array(
 					'key'		=> '_drsa_ad_placement',
 					'value'	=> $place
+				),
+				array(
+					'key'			=> '_drsa_ad_timing_start_date',
+          'value' 	=> current_time( 'timestamp' ),
+          'compare' => '<',
+          'type'		=> 'NUMERIC'
+				),
+				array(
+					'key'			=> '_drsa_ad_timing_end_date',
+          'value' 	=> current_time( 'timestamp' ),
+          'compare' => '>',
+          'type'		=> 'NUMERIC'
 				)
 			),
 			'tax_query'				=> array(
