@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Admin hooks.
+ *
+ * @package dude-really-simple-ads
+ */
 class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 
 	/**
@@ -12,7 +16,7 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 	public function reorder_metaboxes() {
 		add_meta_box( 'postimagediv', __( 'Mainos', 'dude-really-simple-ads' ), 'post_thumbnail_meta_box', 'drsa_ad', 'side', 'high' );
 		add_meta_box( 'drsa_campaignsdiv', __( 'Kampanjat', 'dude-really-simple-ads' ), 'post_categories_meta_box', 'drsa_ad', 'normal', 'low', array( 'taxonomy' => 'drsa_campaigns' ) );
-		add_meta_box( 'authordiv', __( 'Author' ), 'post_author_meta_box', 'drsa_ad', 'side', 'low' );
+		add_meta_box( 'authordiv', __( 'Author', 'dude-really-simple-ads' ), 'post_author_meta_box', 'drsa_ad', 'side', 'low' );
 	} // end reorder_metaboxes
 
 	/**
@@ -24,9 +28,12 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 	 * @version 0.1.0
 	 */
 	public function change_featured_image_links( $content ) {
+		// @codingStandardsIgnoreStart
 		$content = str_replace( __( 'Set featured image' ), __( 'Lisää mainoksen sisältö', 'dude-really-simple-ads' ), $content );
 		$content = str_replace( __( 'Remove featured image' ), __( 'Poista mainoksen sisältö', 'dude-really-simple-ads' ), $content );
 		$content = str_replace( __( 'Click the image to edit or update' ), '', $content );
+		// @codingStandardsIgnoreEnd
+
 		return $content;
 	} // end change_featured_image_links
 
@@ -36,11 +43,13 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function admin_notice_no_ad_placements() { ?>
+	public function admin_notice_no_ad_placements() {
+		?>
     <div class="notice notice-error">
-			<p><b><?php _e( 'Hei moi!', 'dude-really-simple-ads' ); ?></b><br><?php _e( 'Näyttää siltä että teemassasi ei ole yhtään rekisteröityä mainospaikkaa. Jotta lisäämäsi mainokset toimisivat, rekisteröi teeman mainospaikat ja valitse jo luoduille mainoksille oikea paikka.' ); ?></p>
+			<p><b><?php esc_attr_e( 'Hei moi!', 'dude-really-simple-ads' ); ?></b><br><?php esc_attr_e( 'Näyttää siltä että teemassasi ei ole yhtään rekisteröityä mainospaikkaa. Jotta lisäämäsi mainokset toimisivat, rekisteröi teeman mainospaikat ja valitse jo luoduille mainoksille oikea paikka.', 'dude-really-simple-ads' ); ?></p>
     </div>
-	<?php } // end admin_notice_no_ad_placements
+		<?php
+	} // end admin_notice_no_ad_placements
 
 	/**
 	 * Run image size validation when saving the drsa_ad post type.
@@ -56,6 +65,7 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 			return;
     }
 
+    // @codingStandardsIgnoreStart
 		// Invalidate ad if there's no image
 		if ( ! array_key_exists( '_thumbnail_id', $_POST ) || ! is_numeric( $_POST['_thumbnail_id'] ) ) {
 			delete_post_meta( $post_id, '_drsa_ad_show' );
@@ -75,6 +85,7 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 		// Get image id and metadata for checking size
 		$image_id = $_POST['_thumbnail_id'];
 		$image_metadata = get_post_meta( $image_id, '_wp_attachment_metadata', true );
+		// @codingStandardsIgnoreEnd
 
 		/**
 		 * Check image size against selected ad place size definitions, Invalidate
@@ -109,7 +120,7 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 
 		// Show error notice containing right dimensions ?>
 	 	<div class="notice notice-error">
-			<p><b><?php _e( 'Kuva on väärän kokoinen, mainosta ei näytetä!', 'dude-really-simple-ads' ); ?></b><br><?php printf( __( 'Lataamasi mainoskuva ei täytyä valitun mainospaikan kokovaatimusta, ole hyvä ja lataa kuva jonka koko on %1$s x %2$s pikseliä.', 'dude-really-simple-ads' ), $places[ $ad_placement ]['width'], $places[ $ad_placement ]['height'] ); ?></p>
+			<p><b><?php esc_attr_e( 'Kuva on väärän kokoinen, mainosta ei näytetä!', 'dude-really-simple-ads' ); ?></b><br><?php printf( __( 'Lataamasi mainoskuva ei täytyä valitun mainospaikan kokovaatimusta, ole hyvä ja lataa kuva jonka koko on %1$s x %2$s pikseliä.', 'dude-really-simple-ads' ), $places[ $ad_placement ]['width'], $places[ $ad_placement ]['height'] ); ?></p>
 		</div>
 	<?php } // end admin_notices
 
