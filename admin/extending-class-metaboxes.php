@@ -20,6 +20,7 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
 	} // end run
 
 	public function add_ad_metabox() {
+		$drsa_places = new DRSA_Places();
     $prefix = '_drsa_ad_timing';
 
     $cmb = new_cmb2_box( array(
@@ -48,7 +49,7 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
     ) );
 
     $prefix = '_drsa_ad_placement';
-		$options = DRSA_Places::get_ad_placement_options();
+		$options = $drsa_places->get_ad_placement_options();
 
 		if( empty( $options ) ) {
 			add_action( 'admin_notices', array( 'DRSA_Admin_Hooks', 'admin_notice_no_ad_placements' ) );
@@ -94,6 +95,7 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
 	} // end add_ad_notes_metabox
 
 	public function add_ad_campaign_metabox() {
+		$drsa_places = new DRSA_Places();
     $prefix = '_drsa_ad_campaign_timing';
 
     $cmb = new_cmb2_box( array(
@@ -123,7 +125,7 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
     ) );
 
 		$prefix = '_drsa_ad_campaign_placement';
-		$options = DRSA_Places::get_ad_placement_options();
+		$options = $drsa_places->get_ad_placement_options();
 
 		if( empty( $options ) ) {
 			add_action( 'admin_notices', array( 'DRSA_Admin_Hooks', 'admin_notice_no_ad_placements' ) );

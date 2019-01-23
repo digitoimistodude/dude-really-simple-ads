@@ -43,7 +43,7 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function admin_notice_no_ad_placements() {
+	public static function admin_notice_no_ad_placements() {
 		?>
     <div class="notice notice-error">
 			<p><b><?php esc_attr_e( 'Hei moi!', 'dude-really-simple-ads' ); ?></b><br><?php esc_attr_e( 'Näyttää siltä että teemassasi ei ole yhtään rekisteröityä mainospaikkaa. Jotta lisäämäsi mainokset toimisivat, rekisteröi teeman mainospaikat ja valitse jo luoduille mainoksille oikea paikka.', 'dude-really-simple-ads' ); ?></p>
@@ -120,7 +120,7 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 
 		// Show error notice containing right dimensions ?>
 	 	<div class="notice notice-error">
-			<p><b><?php esc_attr_e( 'Kuva on väärän kokoinen, mainosta ei näytetä!', 'dude-really-simple-ads' ); ?></b><br><?php printf( __( 'Lataamasi mainoskuva ei täytyä valitun mainospaikan kokovaatimusta, ole hyvä ja lataa kuva jonka koko on %1$s x %2$s pikseliä.', 'dude-really-simple-ads' ), $places[ $ad_placement ]['width'], $places[ $ad_placement ]['height'] ); ?></p>
+			<p><b><?php _e( 'Kuva on väärän kokoinen, mainosta ei näytetä!', 'dude-really-simple-ads' ); ?></b><br><?php printf( __( 'Lataamasi mainoskuva ei täytyä valitun mainospaikan kokovaatimusta, ole hyvä ja lataa kuva jonka koko on %1$s x %2$s pikseliä.', 'dude-really-simple-ads' ), $places[ $ad_placement ]['width'], $places[ $ad_placement ]['height'] ); ?></p>
 		</div>
 	<?php } // end admin_notices
 
