@@ -1,10 +1,9 @@
 <?php
-
 /**
  * Plugin Name: Really simple ads
  * Plugin URL: https://www.dude.fi
  * Description: A simple way to manage, track and show ads
- * Version: 0.1.0
+ * Version: 1.0.0-dev
  * Author: Digitoimisto Dude Oy, Timi Wahalahti
  * Author URL: https://www.dude.fi
  * Requires at least: 4.6
@@ -12,16 +11,23 @@
  *
  * Text Domain: dude-really-simple-ads
  * Domain Path: /languages
+ *
+ * @package dude-really-simple-ads
  */
 
-if( !defined( 'ABSPATH' )  )
+if ( ! defined( 'ABSPATH' ) ) {
 	exit();
+}
 
-require plugin_dir_path( __FILE__ ).'includes/cmb2/init.php';
+/**
+ *  Include CMB2 metabox library which is used for ad meta.
+ *  See https://github.com/CMB2/CMB2
+ */
+require plugin_dir_path( __FILE__ ) . 'includes/cmb2/init.php';
 
 // Check that plugin isn't active already for some odd reason
-if( !function_exists( 'run_drsa' ) ) {
-	require plugin_dir_path( __FILE__ ).'includes/class-dude-really-simple-ads.php';
+if ( ! function_exists( 'run_drsa' ) ) {
+	require plugin_dir_path( __FILE__ ) . 'includes/class-dude-really-simple-ads.php';
 
 	function run_drsa() {
 		$plugin = new Dude_Really_Simple_Ads();

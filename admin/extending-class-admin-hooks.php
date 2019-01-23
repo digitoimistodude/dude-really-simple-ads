@@ -18,16 +18,16 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 	/**
 	 * Small, small thing. Change featured image meta box texts.
 	 *
-	 * @param   string    $content meta box default content
-	 * @return  string             meta box content with changed strings
+	 * @param   string $content meta box default content.
+	 * @return  string          meta box content with changed strings.
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
 	public function change_featured_image_links( $content ) {
-	  $content = str_replace( __( 'Set featured image' ), __( 'Lisää mainoksen sisältö', 'dude-really-simple-ads' ), $content );
-	  $content = str_replace( __( 'Remove featured image' ), __( 'Poista mainoksen sisältö', 'dude-really-simple-ads' ), $content );
+		$content = str_replace( __( 'Set featured image' ), __( 'Lisää mainoksen sisältö', 'dude-really-simple-ads' ), $content );
+		$content = str_replace( __( 'Remove featured image' ), __( 'Poista mainoksen sisältö', 'dude-really-simple-ads' ), $content );
 		$content = str_replace( __( 'Click the image to edit or update' ), '', $content );
-	  return $content;
+		return $content;
 	} // end change_featured_image_links
 
 	/**
@@ -38,32 +38,32 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 	 */
 	public function admin_notice_no_ad_placements() { ?>
     <div class="notice notice-error">
-      <p><b><?php _e( 'Hei moi!', 'dude-really-simple-ads' ); ?></b><br><?php _e( 'Näyttää siltä että teemassasi ei ole yhtään rekisteröityä mainospaikkaa. Jotta lisäämäsi mainokset toimisivat, rekisteröi teeman mainospaikat ja valitse jo luoduille mainoksille oikea paikka.' ) ?></p>
+			<p><b><?php _e( 'Hei moi!', 'dude-really-simple-ads' ); ?></b><br><?php _e( 'Näyttää siltä että teemassasi ei ole yhtään rekisteröityä mainospaikkaa. Jotta lisäämäsi mainokset toimisivat, rekisteröi teeman mainospaikat ja valitse jo luoduille mainoksille oikea paikka.' ); ?></p>
     </div>
-  <?php } // end admin_notice_no_ad_placements
+	<?php } // end admin_notice_no_ad_placements
 
 	/**
 	 * Run image size validation when saving the drsa_ad post type.
 	 *
-	 * @param   integer    $post_id
-	 * @param   object   	 $post    post object before changes saved
-	 * @param   boolean    $update  are we updating existing post
+	 * @param   integer $post_id post id.
+	 * @param   object  $post    post object before changes saved.
+	 * @param   boolean $update  are we updating existing post.
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
 	public function validate_feature_image_size( $post_id, $post, $update ) {
-		if( 'drsa_ad' != $post->post_type ) {
-      return;
+		if ( 'drsa_ad' !== $post->post_type ) {
+			return;
     }
 
 		// Invalidate ad if there's no image
-		if( !array_key_exists( '_thumbnail_id', $_POST ) || !is_numeric( $_POST['_thumbnail_id'] ) ) {
+		if ( ! array_key_exists( '_thumbnail_id', $_POST ) || ! is_numeric( $_POST['_thumbnail_id'] ) ) {
 			delete_post_meta( $post_id, '_drsa_ad_show' );
 			return;
 		}
 
 		// Invalidate ad if there's no place selected
-		if( !array_key_exists( '_drsa_ad_placement', $_POST ) ) {
+		if ( ! array_key_exists( '_drsa_ad_placement', $_POST ) ) {
 			delete_post_meta( $post_id, '_drsa_ad_show' );
 			return;
 		}
