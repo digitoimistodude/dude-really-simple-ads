@@ -7,6 +7,7 @@
 
 1. [Please note before using](#please-note-before-using)
 3. [Features](#features)
+4. [Usage](#usage)
 6. [Changelog](#hangelog)
 7. [Contributing](#contributing)
 8. [TODO](#TODO)
@@ -15,6 +16,43 @@
 By using this code bases, you agree that the anything can change to a different direction without a warning.
 
 ## Features
+
+## Usage
+
+### Register ad places
+Ad places are registered with `drsa_ad_placement_sizes` hook. You should pass nested array containing one array element per each ad place. See exmaple below.
+
+```php
+add_filter( 'drsa_ad_placement_sizes', 'myprefix_register_ad_spots' );
+function myprefix_register_ad_spots() {
+    $spots = array(
+        array(
+            // title whichs shows when adding ads
+            'name'      => __( 'Frontpage default' ),
+
+            // unique identified for this placed, used to get ads
+            'id'        => 'frontpage-default',
+
+            // add size, uploaded image will be tested against these values
+            'width'     => 480,
+            'height'    => 480,
+        ),
+    );
+
+    return $spots;
+}
+```
+
+### Set default ad and link
+If theres no active ads for the place, you can set default image and link for the ad place in question with two different hooks.
+
+Use filter `drsa_default_ad/{place-id}` to set default ad image src.
+Use filter `drsa_default_ad_target/{place-id}` to set default ad address.
+
+### Disable UTM tags in ad target url
+By default UTM tags are inserted automatically to the ad target address, use filter `drsa_use_utm` to disable it.
+
+`add_filter( 'drsa_use_utm', '__return_false' );`
 
 ## Changelog
 
