@@ -11,20 +11,20 @@
 7. [Contributing](#contributing)
 8. [TODO](#TODO)
 
-### Please note before using
+## Please note before using
 By using this code bases, you agree that the anything can change to a different direction without a warning.
 
-### Features
+## Features
 
-### Changelog
+## Changelog
 
 Changelog can be found from [releases page](https://github.com/digitoimistodude/air-helper/releases).
 
-### Contributing
+## Contributing
 
 If you have ideas about the plugin or spot an issue, please let us know. Before contributing ideas or reporting an issue about "missing" features or things regarding to the nature of that matter, please read [Please note](#please-note-before-using) section. Thank you very much.
 
-### TODO
+## TODO
 
 [] better inline commenting
 [] fix old files for phpcs
