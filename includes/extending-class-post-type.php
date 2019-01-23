@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Register post type for ads
+ *
+ * @package dude-really-simple-ads
+ */
 class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 
 	public function __construct() {
@@ -85,7 +89,7 @@ class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 	/**
 	 * Customize drsa_ad post type listing columns.
 	 *
-	 * @param   array $columns wp default columns
+	 * @param   array $columns wp default columns.
 	 * @return  array 	            our custom columns
 	 * @since   0.1.0
 	 * @version 0.1.0
@@ -119,8 +123,8 @@ class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 	/**
 	 * Show content on our custom drsa_ad listing columns.
 	 *
-	 * @param   string  $column  current list column
-	 * @param   integer $post_id current list item id
+	 * @param   string  $column  current list column.
+	 * @param   integer $post_id current list item id.
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
@@ -131,7 +135,7 @@ class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 
 				if ( ! empty( $date ) ) {
 					echo date_i18n( 'd.m.Y H:i', $date );
-                }
+        }
 				break;
 
 			case 'drsa_timing_end':
@@ -139,7 +143,7 @@ class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 
 				if ( ! empty( $date ) ) {
 					echo date_i18n( 'd.m.Y H:i', $date );
-                }
+        }
 				break;
 
 			case 'drsa_placement':
@@ -148,7 +152,7 @@ class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 
 				if ( ! empty( $place ) && array_key_exists( $place, $places ) ) {
 					echo $places[ $place ];
-                }
+        }
 				break;
 
 			case 'drsa_stats':

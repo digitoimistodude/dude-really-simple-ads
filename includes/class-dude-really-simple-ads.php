@@ -2,16 +2,35 @@
 
 /**
  * Base for the plugin.
+ *
+ * @package dude-really-simple-ads
  */
 class Dude_Really_Simple_Ads {
 
+	/**
+	 *  Instace if this class
+	 *
+	 *  @var null
+	 */
 	private $instance = null;
+
+	/**
+	 *  Name slug of this plugin
+	 *
+	 *  @var string
+	 */
 	protected $plugin_name;
+
+	/**
+	 *  Version of this plugin
+	 *
+	 *  @var string
+	 */
 	protected $version;
 
 	public function __construct() {
 		$this->plugin_name = 'dude-really-simple-ads';
-		$this->version = '0.1.0';
+		$this->version = '1.0.0-beta';
 	} // end __construct
 
 	/**
@@ -66,7 +85,7 @@ class Dude_Really_Simple_Ads {
 		add_filter( 'post_row_actions', array( 'DRSA_Admin_Hooks', 'remove_quick_edit' ), 10, 2 );
 
 		// These hooks are only needed when editing existing post
-		if ( 'post.php' === $pagenow && isset( $_GET['post'] ) && 'drsa_ad' === get_post_type( $_GET['post'] ) ) {
+		if ( 'post.php' === $pagenow && isset( $_GET['post'] ) && 'drsa_ad' === get_post_type( sanitize_text_field( $_GET['post'] ) ) ) {
 			add_action( 'add_meta_boxes', array( 'DRSA_Admin_Hooks', 'reorder_metaboxes' ) );
 			add_action( 'admin_notices', array( 'DRSA_Admin_Hooks', 'admin_notices' ) );
 			add_filter( 'admin_post_thumbnail_html', array( 'DRSA_Admin_Hooks', 'change_featured_image_links' ) );

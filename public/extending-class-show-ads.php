@@ -1,6 +1,16 @@
 <?php
-
+/**
+ * Handle ad showing related things.
+ *
+ * @package dude-really-simple-ads
+ */
 class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
+
+	/**
+	 *  Array containing information which ads are visible on the page.
+	 *
+	 *  @var array
+	 */
 	public static $visible_ads = array();
 
 	public function __construct() {
@@ -10,7 +20,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 	public static function get_active_ad( $place = null ) {
 		if ( is_null( $place ) ) {
 			return false;
-        }
+    }
 
 		$query = new WP_Query(
 			array(
@@ -53,7 +63,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 					'target'	=> get_post_meta( $post_id, '_drsa_ad_target_url', true ),
 					'slug'		=> sanitize_title( get_the_title() ),
 					'id'			=> $post_id,
-				  );
+				);
 		  endwhile;
 		else :
 			$return = false;
@@ -66,7 +76,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 	public static function get_campaign_ad( $campaign = null, $place = null ) {
 		if ( is_null( $campaign ) || is_null( $place ) ) {
 			return false;
-        }
+    }
 
 		$query = new WP_Query(
 			array(
@@ -118,7 +128,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 					'slug'					=> sanitize_title( get_the_title() ),
 					'campaign_slug'	=> $campaign,
 					'id'						=> $post_id,
-				  );
+				);
 		  endwhile;
 		else :
 			$return = false;
@@ -181,7 +191,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 		$utm['utm_source'] = apply_filters( 'drsa_utm_source', sanitize_title( get_bloginfo( 'page_name' ) ) );
 		$utm['utm_medium'] = apply_filters( 'drsa_utm_medium/' . $place, apply_filters( 'drsa_utm_medium', $place ) );
 
-		if ( $from === 'campaign' ) {
+		if ( 'campaign' === $from ) {
 			$utm['utm_content'] = $ad['slug'];
 			$utm['utm_campaign'] = $ad['campaign_slug'];
 		} else {
@@ -193,18 +203,18 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 	} // end build_target_with_utm
 
 	public static function update_statistics() {
-		$ad = sanitize_text_field( $_POST['ad'] );
+		$ad = sanitize_text_field( $_POST['ad'] ); // @codingStandardsIgnoreLine
 		check_ajax_referer( 'drsa' . $ad, 'nonce' );
 
 		$meta_key = '_drsa_campaing_show_counter';
-		if ( $_POST['type'] === 'click' ) {
+		if ( $_POST['type'] === 'click' ) { // @codingStandardsIgnoreLine
 			$meta_key = '_drsa_campaing_click_counter';
-        }
+    }
 
 		$i = get_post_meta( $ad, $meta_key, true );
 		if ( false === $i ) {
 			$i = 0;
-        }
+    }
 
 		$i++;
 		update_post_meta( $ad, $meta_key, $i );
@@ -237,7 +247,7 @@ if ( ! function_exists( 'get_the_active_ad' ) ) {
 
 		if ( ! empty( $ad ) && empty( $ad['target'] ) ) {
 			$ad['target'] = false;
-        }
+    }
 
 		if ( ! $ad ) {
 			$ad['src'] = apply_filters( 'drsa_default_ad/' . $place, false );
@@ -256,7 +266,7 @@ if ( ! function_exists( 'get_the_active_ad' ) ) {
 
 		if ( $use_utm && ! empty( $ad['target'] ) ) {
 			$ad['target'] = DRSA_Show_ads::build_target_with_utm( $ad, $from, $place );
-        }
+    }
 
 		DRSA_Show_Ads::$visible_ads[] = array(
 			'adid'									=> $ad['id'],

@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Add metaboxes for ad and campaign.
+ *
+ * @package dude-really-simple-ads
+ */
 class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
 
 	public function __construct() {

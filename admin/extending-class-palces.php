@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Handle place related things.
+ *
+ * @package dude-really-simple-ads
+ */
 class DRSA_Places extends Dude_Really_Simple_Ads {
 
 	public function __construct() {
