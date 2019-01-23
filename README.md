@@ -8,6 +8,7 @@
 1. [Please note before using](#please-note-before-using)
 3. [Features](#features)
 4. [Usage](#usage)
+5. [Hooks](#hooks)
 6. [Changelog](#hangelog)
 7. [Contributing](#contributing)
 8. [TODO](#TODO)
@@ -21,7 +22,7 @@ Basic feature list includes
 - Multiple ad places
 - Sheculed ads with start and end time
 - Campaigns containing multiple ads
-- Simple view and click counter per ad
+- Simple view and click counter per ad (JavaScript)
 - Private notes for ads and campaigns
 
 ## Usage
@@ -71,7 +72,43 @@ if ( $ad ) {
 
 _Always check the existance of function._
 
-### Campaigns
+### Adding a shortcode to embed ads into content
+You can make your own shortcode to get ads everywhere you want, for example into the content of blog post. Below is simple example of shortcode usage.
+
+```php
+add_shortcode( 'ad', 'myprefix_shortcode_show_ad' );
+function myprefix_shortcode_show_ad( $atts ) {
+    if ( ! function_exists( 'get_the_active_ad' ) ) {
+        return;
+    }
+
+    if ( empty( $atts ) ) {
+        return;
+    }
+
+    if ( ! isset( $atts['place'] ) ) {
+        if ( is_user_logged_in() && current_user_can( 'edit_others_posts' ) ) {
+            return __( 'No ad place defined', 'textdomain' );
+        } else {
+            return;
+        }
+    }
+
+    $ad = get_the_active_ad( $atts['place'] );
+
+    if ( ! $ad ) {
+        if ( is_user_logged_in() && current_user_can( 'edit_others_posts' ) ) {
+            return __( 'No active ads or campaigns', 'textdomain' );
+        } else {
+            return;
+        }
+    }
+
+    return '<a href="' . $ad['target'] . '" target="_blank" class="' . $ad['click_counter_class'] . '"><img src="' . $ad['src'] . '" class="ad ad-place-' . $ad['place'] . '"/></a>';
+}
+```
+
+### Hooks
 
 ### Set default ad and link
 If theres no active ads for the place, you can set default image and link for the ad place in question with two different hooks.
