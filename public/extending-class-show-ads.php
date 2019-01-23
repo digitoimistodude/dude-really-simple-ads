@@ -219,6 +219,8 @@ if( !function_exists( 'get_the_active_ad' ) ) {
 			'nonce'										=> wp_create_nonce( 'drsa'.$ad['id'] )
 		) );
 
+		$ad['place'] = $place;
+
 		unset( $ad['id'] );
 		unset( $ad['slug'] );
 		unset( $ad['campaign_slug'] );
