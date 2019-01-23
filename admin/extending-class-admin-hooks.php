@@ -80,7 +80,7 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 		 * Check image size against selected ad place size definitions, Invalidate
 		 * ad if those are different.
 		 */
-		if( $places[ $ad_placement ]['width'] !== $image_metadata['width'] || $places[ $ad_placement ]['height'] !== $image_metadata['height'] ) {
+		if ( $places[ $ad_placement ]['width'] !== $image_metadata['width'] || $places[ $ad_placement ]['height'] !== $image_metadata['height'] ) {
 			delete_post_meta( $post_id, '_drsa_ad_show' );
 			return;
 		}
@@ -99,7 +99,7 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 
 		// If ad is valid, do not continue
 		$show_ad = get_post_meta( get_the_id(), '_drsa_ad_show', true );
-		if( !empty( $show_ad ) ) {
+		if ( ! empty( $show_ad ) ) {
 			return;
    	}
 
@@ -116,14 +116,14 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 	/**
 	 * Remove quikd edit link in drsa_ad post listing.
 	 *
-	 * @param   array    	$actions possible actions to perform for post
+	 * @param   array $actions possible actions to perform for post.
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
 	public function remove_quick_edit( $actions ) {
 		global $post;
 
-		if( $post->post_type == 'drsa_ad' ) {
+		if ( 'drsa_ad' === $post->post_type ) {
 			unset( $actions['inline hide-if-no-js'] );
 		}
 

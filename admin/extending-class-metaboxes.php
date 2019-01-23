@@ -23,31 +23,31 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
     $prefix = '_drsa_ad_timing';
 
     $cmb = new_cmb2_box( array(
-        'id'            => $prefix,
-        'title'         => __( 'Mainoksen perustiedot', 'dude-really-simple-ads' ),
-        'object_types'  => array( 'drsa_ad', ),
-        'context'       => 'normal',
-        'priority'      => 'high',
-        'show_names'    => true,
+			'id'           => $prefix,
+			'title'        => __( 'Mainoksen perustiedot', 'dude-really-simple-ads' ),
+			'object_types' => array( 'drsa_ad' ),
+			'context'      => 'normal',
+			'priority'     => 'high',
+			'show_names'   => true,
     ) );
 
     $cmb->add_field( array(
-        'name'				=> __( 'Näyttöaika alkaa', 'dude-really-simple-ads' ),
-        'id'					=> $prefix.'_start_date',
-        'type'				=> 'text_datetime_timestamp',
-				'date_format'	=> 'd.m.Y',
-				'time_format' => 'H:i',
+			'name'				=> __( 'Näyttöaika alkaa', 'dude-really-simple-ads' ),
+			'id'					=> $prefix . '_start_date',
+			'type'				=> 'text_datetime_timestamp',
+			'date_format'	=> 'd.m.Y',
+			'time_format'	=> 'H:i',
     ) );
 
 		$cmb->add_field( array(
-        'name'				=> __( 'ja loppuu', 'dude-really-simple-ads' ),
-        'id'					=> $prefix.'_end_date',
-        'type'				=> 'text_datetime_timestamp',
-				'date_format'	=> 'd.m.Y',
-				'time_format' => 'H:i',
+			'name'				=> __( 'ja loppuu', 'dude-really-simple-ads' ),
+			'id'					=> $prefix . '_end_date',
+			'type'				=> 'text_datetime_timestamp',
+			'date_format'	=> 'd.m.Y',
+			'time_format' => 'H:i',
     ) );
 
-		$prefix = '_drsa_ad_placement';
+    $prefix = '_drsa_ad_placement';
 		$options = DRSA_Places::get_ad_placement_options();
 
 		if( empty( $options ) ) {
