@@ -28,6 +28,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 				'post_status'			=> 'public',
 				'posts_per_page'	=> 1,
 				'no_found_rows' 	=> true,
+				'orderby'					=> 'rand',
 				'meta_query'			=> array(
 					'relation'		=> 'AND',
 					array(
