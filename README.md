@@ -25,11 +25,13 @@ Displaying ads needs some custom coding. You can get current active ad or campai
 ```php
 $ad = array(
   'target'              => null, // ad target url
-  'click_counter_class' => null, // class to use in html a-tag to track clicks
   'src'                 => null, // url to ad image
-  'place'               => null, // for which place this ad is for
 )
 ```
+
+## Activating click counting
+
+Click counting needs `drsa-PLACEMENT` class in clickable html element (usually a a-tag) in order to work.
 
 ## Setting ad place defaults
 
