@@ -1,0 +1,16 @@
+{
+  "name": "digitoimistodude/dude-really-simple-ads",
+  "type": "wordpress-plugin",
+  "description": "A simple way to manage, track and show ads",
+  "homepage": "https://github.com/digitoimistodude/dude-really-simple-ads",
+  "keywords": ["wordpress", "plugin"],
+  "license": "GPL-3.0+",
+  "version": "0.1.0",
+  "authors": [
+    {
+      "name": "Timi Wahalahti",
+      "email": "timi@dude.fi",
+      "homepage": "https://github.com/timiwahalahti"
+    }
+  ]
+}
