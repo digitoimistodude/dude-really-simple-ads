@@ -60,7 +60,7 @@ class Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	private static function set_hooks() {
+	private function set_hooks() {
 		load_plugin_textdomain( 'dude-really-simple-ads', false, dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/' );
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ) );
 		add_action( 'wp_ajax_drsa_count', array( 'DRSA_Show_Ads', 'update_statistics' ) );
