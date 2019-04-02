@@ -16,7 +16,7 @@ class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function run() {
+	public static function run() {
 		add_action( 'init', array( $this, 'register_post_type' ) );
 		add_filter( 'manage_drsa_ad_posts_columns', array( $this, 'list_columns' ) );
 		add_action( 'manage_drsa_ad_posts_custom_column', array( $this, 'list_columns_content' ), 10, 2 );
@@ -28,7 +28,7 @@ class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function register_post_type() {
+	public static function register_post_type() {
 		register_post_type( 'drsa_ad', self::arguments() );
 	} // end register_post_type
 
@@ -39,7 +39,7 @@ class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	private function labels() {
+	private static function labels() {
 		return apply_filters(
 			'drsa_post_type_labels', array(
 				'name'               => __( 'Mainokset', 'dude-really-simple-ads' ),
@@ -67,7 +67,7 @@ class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	private function arguments() {
+	private static function arguments() {
 		return apply_filters(
 			'drsa_post_type_args', array(
 				'labels'             => self::labels(),
@@ -94,7 +94,7 @@ class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function list_columns( $columns ) {
+	public static function list_columns( $columns ) {
 
 		/**
 		 * Remove some unwanted default columns, that does not provide any useful
@@ -128,7 +128,7 @@ class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function list_columns_content( $column, $post_id ) {
+	public static function list_columns_content( $column, $post_id ) {
 		switch ( $column ) {
 			case 'drsa_timing_start':
 				$date = get_post_meta( $post_id, '_drsa_ad_timing_start_date', true );

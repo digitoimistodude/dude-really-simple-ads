@@ -16,7 +16,7 @@ class DRSA_Taxonomy extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function run() {
+	public static function run() {
 		add_action( 'init', array( $this, 'register_taxonomy' ) );
 		add_filter( 'manage_edit-drsa_campaigns_columns', array( $this, 'list_columns' ) );
 		add_action( 'manage_drsa_campaigns_custom_column', array( $this, 'list_columns_content' ), 10, 3 );
@@ -29,7 +29,7 @@ class DRSA_Taxonomy extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function register_taxonomy() {
+	public static function register_taxonomy() {
 		register_taxonomy( 'drsa_campaigns', array( 'drsa_ad' ), self::arguments() );
 	} // end register_taxonomy
 
@@ -65,7 +65,7 @@ class DRSA_Taxonomy extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	private function arguments() {
+	private static function arguments() {
 		return apply_filters(
 			'drsa_taxonomy_args', array(
 				'hierarchical'      => true,
@@ -85,7 +85,7 @@ class DRSA_Taxonomy extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function list_columns( $columns ) {
+	public static function list_columns( $columns ) {
 
 		/**
 		 * Remove some unwanted default columns
@@ -117,7 +117,7 @@ class DRSA_Taxonomy extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function list_columns_content( $content, $column, $term_id ) {
+	public static function list_columns_content( $content, $column, $term_id ) {
 		switch ( $column ) {
 			case 'drsa_timing_start':
 				$date = get_term_meta( $term_id, '_drsa_ad_campaing_timing_start_date', true );
@@ -155,7 +155,7 @@ class DRSA_Taxonomy extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function kill_taxonomy_archive( $query ) {
+	public static function kill_taxonomy_archive( $query ) {
   	if ( ! is_admin() && is_tax( 'drsa_campaigns' ) ) {
 			$query->set_404();
     }

@@ -16,14 +16,14 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function run() {
+	public static function run() {
 		add_action( 'cmb2_admin_init', array( $this, 'add_ad_metabox' ) );
 		add_action( 'cmb2_admin_init', array( $this, 'add_ad_notes_metabox' ) );
 		add_action( 'cmb2_admin_init', array( $this, 'add_ad_campaign_metabox' ) );
 		add_action( 'cmb2_admin_init', array( $this, 'add_ad_campaign_notes_metabox' ) );
 	} // end run
 
-	public function add_ad_metabox() {
+	public static function add_ad_metabox() {
 		$drsa_places = new DRSA_Places();
     $prefix = '_drsa_ad_timing';
 
@@ -85,7 +85,7 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
 		);
 	} // end add_ad_metabox
 
-	public function add_ad_notes_metabox() {
+	public static function add_ad_notes_metabox() {
     $prefix = '_drsa_ad_notes';
 
     $cmb = new_cmb2_box(
@@ -112,7 +112,7 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
 		);
 	} // end add_ad_notes_metabox
 
-	public function add_ad_campaign_metabox() {
+	public static function add_ad_campaign_metabox() {
 		$drsa_places = new DRSA_Places();
     $prefix = '_drsa_ad_campaign_timing';
 
@@ -177,7 +177,7 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
 		}
 	} // end add_ad_campaign_metabox
 
-	public function add_ad_campaign_notes_metabox() {
+	public static function add_ad_campaign_notes_metabox() {
     $prefix = '_drsa_ad_campaign_notes';
 
     $cmb = new_cmb2_box(

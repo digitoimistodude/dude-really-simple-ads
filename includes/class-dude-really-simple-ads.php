@@ -39,7 +39,7 @@ class Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function run() {
+	public static function run() {
 		$this->set_hooks();
 		$this->set_admin_hooks();
 		$this->load_dependencies();
@@ -60,7 +60,7 @@ class Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	private function set_hooks() {
+	private static function set_hooks() {
 		load_plugin_textdomain( 'dude-really-simple-ads', false, dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/' );
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ) );
 		add_action( 'wp_ajax_drsa_count', array( 'DRSA_Show_Ads', 'update_statistics' ) );
@@ -73,7 +73,7 @@ class Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	private function set_admin_hooks() {
+	private static function set_admin_hooks() {
 		if ( ! is_admin() ) {
 			return;
         }
@@ -104,7 +104,7 @@ class Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	private function load_dependencies() {
+	private static function load_dependencies() {
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'includes/extending-class-post-type.php';
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'includes/extending-class-taxonomy.php';
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/extending-class-metaboxes.php';
@@ -119,7 +119,7 @@ class Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public function register_scripts() {
+	public static function register_scripts() {
 		wp_register_script( 'drsa_ad_tracking', plugin_dir_url( dirname( __FILE__ ) ) . 'public/js/script.js' );
 	} // end register_scripts
 } // end class
