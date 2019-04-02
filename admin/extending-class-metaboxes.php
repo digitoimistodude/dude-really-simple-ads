@@ -16,7 +16,7 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public static function run() {
+	public function run() {
 		add_action( 'cmb2_admin_init', array( $this, 'add_ad_metabox' ) );
 		add_action( 'cmb2_admin_init', array( $this, 'add_ad_notes_metabox' ) );
 		add_action( 'cmb2_admin_init', array( $this, 'add_ad_campaign_metabox' ) );

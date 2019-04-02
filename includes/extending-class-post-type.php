@@ -16,7 +16,7 @@ class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public static function run() {
+	public function run() {
 		add_action( 'init', array( $this, 'register_post_type' ) );
 		add_filter( 'manage_drsa_ad_posts_columns', array( $this, 'list_columns' ) );
 		add_action( 'manage_drsa_ad_posts_custom_column', array( $this, 'list_columns_content' ), 10, 2 );

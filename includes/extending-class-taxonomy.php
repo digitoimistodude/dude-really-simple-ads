@@ -16,7 +16,7 @@ class DRSA_Taxonomy extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public static function run() {
+	public function run() {
 		add_action( 'init', array( $this, 'register_taxonomy' ) );
 		add_filter( 'manage_edit-drsa_campaigns_columns', array( $this, 'list_columns' ) );
 		add_action( 'manage_drsa_campaigns_custom_column', array( $this, 'list_columns_content' ), 10, 3 );
@@ -40,7 +40,7 @@ class DRSA_Taxonomy extends Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	private function labels() {
+	private static function labels() {
 		return apply_filters(
 			'drsa_taxonomy_labels', array(
 				'name'              => __( 'Kampanjat', 'dude-really-simple-ads' ),

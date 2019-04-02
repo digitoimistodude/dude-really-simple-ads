@@ -39,7 +39,7 @@ class Dude_Really_Simple_Ads {
 	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
-	public static function run() {
+	public function run() {
 		$this->set_hooks();
 		$this->set_admin_hooks();
 		$this->load_dependencies();
