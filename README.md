@@ -1,5 +1,5 @@
 # Really simple ads
-![version_1.0.0-beta](https://img.shields.io/badge/Version-1.0.0--beta-orange.svg) ![Tested_up_to WordPress_4.6](https://img.shields.io/badge/Tested_up_to-WordPress_4.6-blue.svg?style=flat-square) ![Compatible_with PHP_7.0](https://img.shields.io/badge/Compatible_with-PHP_7.0-green.svg?style=flat-square)
+![version_1.1.0](https://img.shields.io/badge/Version-1.1.0-orange.svg) ![Tested_up_to WordPress_5.6](https://img.shields.io/badge/Tested_up_to-WordPress_5.6-blue.svg?style=flat-square) ![Compatible_with PHP_7.0](https://img.shields.io/badge/Compatible_with-PHP_7.0-green.svg?style=flat-square)
 
 [Digitoimisto Dude Oy](https://www.dude.fi) is a Finnish boutique digital agency in the center of Jyväskylä.
 
