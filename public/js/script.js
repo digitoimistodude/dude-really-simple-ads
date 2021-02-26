@@ -17,7 +17,7 @@ jQuery(document).ready(function($) {
 			drsa_make_show_call( ad );
 		}
 
-		$( ad.click_counter_element ).click(function(e) {
+		$( ad.click_counter_element ).on('click', function(e) {
 			e.preventDefault();
 			drsa_make_click_call( ad );
 
