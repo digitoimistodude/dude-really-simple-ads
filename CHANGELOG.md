@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.1.1]
+### Fixed
+- Change jQuery event handler function
+
 ## [1.1.0]
 Finally after years, get the plugin out of beta.
 
