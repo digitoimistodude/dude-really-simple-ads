@@ -224,7 +224,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 
 	public static function enqueue_js() {
 		if ( ! empty( DRSA_Show_Ads::$visible_ads ) ) {
-			wp_enqueue_script( 'drsa_ad_tracking' );
+			wp_enqueue_script( 'drsa_ad_tracking', plugin_dir_url( dirname( __FILE__ ) ) . 'public/js/script.js', [ 'jquery' ], '1.1.2', true );
 			wp_localize_script( 'drsa_ad_tracking', 'drsa', array(
 				'ajax_url'								=> admin_url( 'admin-ajax.php' ),
 				'counter_cookie_timeout'	=> apply_filters( 'drsa_counter_cookie_timeout', 30000 ),

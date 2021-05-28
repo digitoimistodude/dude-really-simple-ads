@@ -30,7 +30,7 @@ class Dude_Really_Simple_Ads {
 
 	public function __construct() {
 		$this->plugin_name = 'dude-really-simple-ads';
-		$this->version = '1.1.0';
+		$this->version = '1.1.2';
 	} // end __construct
 
 	/**
@@ -62,7 +62,6 @@ class Dude_Really_Simple_Ads {
 	 */
 	private function set_hooks() {
 		load_plugin_textdomain( 'dude-really-simple-ads', false, dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/' );
-		add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ) );
 		add_action( 'wp_ajax_drsa_count', array( 'DRSA_Show_Ads', 'update_statistics' ) );
 		add_action( 'wp_ajax_nopriv_drsa_count', array( 'DRSA_Show_Ads', 'update_statistics' ) );
 	} // end set_locale
@@ -112,14 +111,4 @@ class Dude_Really_Simple_Ads {
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/extending-class-palces.php';
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'public/extending-class-show-ads.php';
 	} // end load_dependencies
-
-	/**
-	 * Register scripts for lates enqueing.
-	 *
-	 * @since   0.1.0
-	 * @version 0.1.0
-	 */
-	public static function register_scripts() {
-		wp_register_script( 'drsa_ad_tracking', plugin_dir_url( dirname( __FILE__ ) ) . 'public/js/script.js' );
-	} // end register_scripts
 } // end class
