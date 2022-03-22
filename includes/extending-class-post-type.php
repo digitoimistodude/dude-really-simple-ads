@@ -82,7 +82,7 @@ class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 				'menu_position'      => null,
 				'menu_icon'          => 'dashicons-pressthis',
 				'supports'           => array( 'title', 'author', 'thumbnail' ),
-				'capability_type'    => apply_filters( 'drsa_ad/cpt/capability_type', null ),
+				'capability_type'    => apply_filters( 'drsa_ad/cpt/capability_type', 'post' ),
 			)
 		);
 	} // end arguments
