@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.1.4]
+### Fixed
+- CMB2 dependency file names
+
 ## [1.1.3]
 ### Added
 - Filter that allows chaning the cpt capability type
