@@ -112,7 +112,7 @@ class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 		return array_merge( $columns,
 	  	array(
 				'drsa_timing_start'				=> __( 'Näyttö alkaa', 'dude-really-simple-ads' ),
-				'drsa_timing_end'					=> __( 'Näyttö loppuu', 'dude-really-simple-ads' ),
+				'drsa_timing_end'					=> Dude_Really_Simple_Ads::get_current_ad_end_mode() ? __( 'Näyttökertojen yläraja', 'dude-really-simple-ads' ) : __( 'Näyttö loppuu', 'dude-really-simple-ads' ),
 				'drsa_placement'					=> __( 'Mainospaikka', 'dude-really-simple-ads' ),
 				'taxonomy-drsa_campaigns'	=> __( 'Mainoskampanja', 'dude-really-simple-ads' ),
 				'drsa_stats'							=> __( 'Luvut', 'dude-really-simple-ads' ),
@@ -140,12 +140,19 @@ class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 				break;
 
 			case 'drsa_timing_end':
-				$date = get_post_meta( $post_id, '_drsa_ad_timing_end_date', true );
+        if ( true === Dude_Really_Simple_Ads::get_current_ad_end_mode() ) {
+          $count = get_post_meta( $post_id, '_drsa_ad_timing_end_view_count', true );
 
-				if ( ! empty( $date ) ) {
-					echo date_i18n( 'd.m.Y H:i', $date );
+          echo esc_html( empty( $count ) ? '-' : $count );
+          break;
+        } else {
+          $date = get_post_meta( $post_id, '_drsa_ad_timing_end_date', true );
+
+          if ( ! empty( $date ) ) {
+            echo date_i18n( 'd.m.Y H:i', $date );
+          }
+          break;
         }
-				break;
 
 			case 'drsa_placement':
 				$place = get_post_meta( $post_id, '_drsa_ad_placement', true );

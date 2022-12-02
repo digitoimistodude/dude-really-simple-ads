@@ -17,47 +17,72 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 		parent::__construct();
 	} // end __construct
 
+  public static $ads_shown = [];
+
 	public static function get_active_ad( $place = null ) {
 		if ( is_null( $place ) ) {
 			return false;
     }
 
-		$query = new WP_Query(
-			array(
-				'post_type'				=> 'drsa_ad',
-				'post_status'			=> 'public',
-				'posts_per_page'	=> 1,
-				'no_found_rows' 	=> true,
-				'orderby'					=> 'rand',
-				'meta_query'			=> array(
-					'relation'		=> 'AND',
-					array(
-						'key'		=> '_drsa_ad_show',
-					),
-					array(
-						'key'		=> '_drsa_ad_placement',
-						'value'	=> $place,
-					),
-					array(
-						'key'			=> '_drsa_ad_timing_start_date',
-						'value' 	=> current_time( 'timestamp' ),
-						'compare' => '<',
-						'type'		=> 'NUMERIC',
-					),
-					array(
-						'key'			=> '_drsa_ad_timing_end_date',
-						'value' 	=> current_time( 'timestamp' ),
-						'compare' => '>',
-						'type'		=> 'NUMERIC',
-					),
-				),
-			)
-		);
+    $query_args = array(
+      'post_type'				=> 'drsa_ad',
+      'post_status'			=> 'public',
+      'posts_per_page'	=> 1,
+      'no_found_rows' 	=> true,
+      'meta_query'			=> array(
+        'relation'		=> 'AND',
+        array(
+          'key'		=> '_drsa_ad_show',
+        ),
+        array(
+          'key'		=> '_drsa_ad_placement',
+          'value'	=> $place,
+        ),
+        array(
+          'key'			=> '_drsa_ad_timing_start_date',
+          'value' 	=> current_time( 'timestamp' ),
+          'compare' => '<',
+          'type'		=> 'NUMERIC',
+        ),
+      ),
+    );
 
+    $place_data = DRSA_Places::get_ad_placements()[ $place ];
+    if ( isset( $place_data['multiple'] ) && true === $place_data['multiple'] ) {
+      $query_args['orderby'] = 'meta_value_num';
+      $query_args['meta_key'] = '_drsa_campaing_show_counter';
+      $query_args['order'] = 'ASC';
+      $query_args['post__not_in'] = isset( DRSA_Show_Ads::$ads_shown[ $place ] ) ? DRSA_Show_Ads::$ads_shown[ $place ] : [];
+    } else {
+      $query_args['orderby'] = 'rand';
+    }
+
+    if ( false === Dude_Really_Simple_Ads::get_current_ad_end_mode() ) {
+      $query_args['meta_query'][] = [
+        'key'			=> '_drsa_ad_timing_end_date',
+        'value' 	=> current_time( 'timestamp' ),
+        'compare' => '>',
+        'type'		=> 'NUMERIC',
+      ];
+    }
+
+		$query = new WP_Query( $query_args );
+
+    $return = [];
 		if ( $query->have_posts() ) :
 		  while ( $query->have_posts() ) :
 				$query->the_post();
 				$post_id = get_the_id();
+
+        if ( true === Dude_Really_Simple_Ads::get_current_ad_end_mode() ) {
+          $post_show_count = get_post_meta( $post_id, '_drsa_campaing_show_counter', true );
+          $post_show_count_limit = get_post_meta( $post_id, '_drsa_ad_timing_end_view_count', true );
+          if ( $post_show_count >= $post_show_count_limit ) {
+            continue;
+          }
+        }
+
+        DRSA_Show_Ads::$ads_shown[ $place ][] = get_the_ID();
 
 				$return = array(
 					'src'			=> wp_get_attachment_url( get_post_thumbnail_id() ),
@@ -66,12 +91,10 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 					'id'			=> $post_id,
 				);
 		  endwhile;
-		else :
-			$return = false;
 		endif;
 
 		wp_reset_postdata();
-		return $return;
+		return empty( $return ) ? false : $return;
 	} // end get_active_ad
 
 	public static function get_campaign_ad( $campaign = null, $place = null ) {
@@ -142,7 +165,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 	public static function get_active_campaign( $place = null ) {
 		if ( is_null( $place ) ) {
 			return false;
-        }
+    }
 
 		$query = new WP_Term_Query(
 			array(
@@ -208,7 +231,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 		check_ajax_referer( 'drsa' . $ad, 'nonce' );
 
 		$meta_key = '_drsa_campaing_show_counter';
-		if ( $_POST['type'] === 'click' ) { // @codingStandardsIgnoreLine
+		if ( isset( $_POST['type'] ) && $_POST['type'] === 'click' ) { // @codingStandardsIgnoreLine
 			$meta_key = '_drsa_campaing_click_counter';
     }
 
@@ -219,12 +242,32 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 
 		$i++;
 		update_post_meta( $ad, $meta_key, $i );
+
+    global $wpdb;
+    $ad_data = [
+      'ad_id' => $ad,
+      'date' => wp_date( 'Y-m-d' ),
+      'page' => sanitize_text_field( $_POST['page'] ),
+      'place' => sanitize_text_field( $_POST['place'] ),
+    ];
+
+    if ( ! isset( $_POST['type'] ) || 'click' !== $_POST['type'] ) {
+      $updated = $wpdb->query( $wpdb->prepare( 'UPDATE wp_drsa_ad_data SET show_count = show_count + 1 WHERE ad_id=%d AND date=%s AND page=%s AND place=%s', [ $ad_data['ad_id'], $ad_data['date'], $ad_data['page'], $ad_data['place'] ] ) );
+      if ( false === $updated || 0 === $updated ) {
+        $ad_data['show_count'] = 1;
+        $ad_data['click_count'] = 0;
+        $wpdb->insert( 'wp_drsa_ad_data', $ad_data );
+      }
+    } elseif ( 'click' === $_POST['type'] ) {
+      $wpdb->query( $wpdb->prepare( 'UPDATE wp_drsa_ad_data SET click_count = click_count + 1 WHERE ad_id=%d AND date=%s AND page=%s AND place=%s', [ $ad_data['ad_id'], $ad_data['date'], $ad_data['page'], $ad_data['place'] ] ) );
+    }
+
 		wp_send_json_success();
 	} // end update_statistics
 
 	public static function enqueue_js() {
 		if ( ! empty( DRSA_Show_Ads::$visible_ads ) ) {
-			wp_enqueue_script( 'drsa_ad_tracking', plugin_dir_url( dirname( __FILE__ ) ) . 'public/js/script.js', [ 'jquery' ], '1.1.2', true );
+			wp_enqueue_script( 'drsa_ad_tracking', plugin_dir_url( dirname( __FILE__ ) ) . 'public/js/script.js', [ 'jquery' ], 1, true );
 			wp_localize_script( 'drsa_ad_tracking', 'drsa', array(
 				'ajax_url'								=> admin_url( 'admin-ajax.php' ),
 				'counter_cookie_timeout'	=> apply_filters( 'drsa_counter_cookie_timeout', 30000 ),
@@ -269,6 +312,11 @@ if ( ! function_exists( 'get_the_active_ad' ) ) {
 			$ad['target'] = DRSA_Show_ads::build_target_with_utm( $ad, $from, $place );
     }
 
+    $place_data = DRSA_Places::get_ad_placements()[ $place ];
+    if ( isset( $place_data['multiple'] ) && true === $place_data['multiple'] ) {
+      $place = "{$place}-order-" . count(DRSA_Show_Ads::$ads_shown[ $place ] );
+    }
+
 		DRSA_Show_Ads::$visible_ads[] = array(
 			'adid'									=> $ad['id'],
 			'click_counter_element'	=> '.' . apply_filters( 'drsa_click_counter_element', 'drsa-' . $place ),
@@ -281,6 +329,11 @@ if ( ! function_exists( 'get_the_active_ad' ) ) {
 
 		$ad['place'] = $place;
 		$ad['click_counter_class'] = apply_filters( 'drsa_click_counter_element', 'drsa-' . $place );
+
+    if ( true === Dude_Really_Simple_Ads::allow_alternative_image() ) {
+      $ad['alternative_image_id'] = get_post_meta( $ad['id'], '_drsa_alternative_image_id' );
+      $ad['alternative_image_src'] = get_post_meta( $ad['id'], '_drsa_alternative_image' );
+    }
 
 		unset( $ad['id'] );
 		unset( $ad['slug'] );

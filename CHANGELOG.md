@@ -5,6 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.1.5]
+### Changed
+- Only count ad view once it is visible in the viewport
+
+### Added
+- Filter to enable view count as ad end condition
+- Filter to enable alternative images for ads
+- Allow ad positions with multiple ads
+- Show more specific ad data at the bottom of ad edit view
+
 ## [1.1.4]
 ### Fixed
 - CMB2 dependency file names

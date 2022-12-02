@@ -30,7 +30,7 @@ class Dude_Really_Simple_Ads {
 
 	public function __construct() {
 		$this->plugin_name = 'dude-really-simple-ads';
-		$this->version = '1.1.2';
+		$this->version = '1.1.5';
 	} // end __construct
 
 	/**
@@ -82,6 +82,7 @@ class Dude_Really_Simple_Ads {
 		// These hooks are that essential that we require them in every view
 		add_action( 'save_post_drsa_ad', array( 'DRSA_Admin_Hooks', 'validate_feature_image_size' ), 10, 3 );
 		add_filter( 'post_row_actions', array( 'DRSA_Admin_Hooks', 'remove_quick_edit' ), 10, 2 );
+    add_action( 'admin_init', [ 'DRSA_Admin_Hooks', 'init_data_table' ] );
 
 		// These hooks are only needed when editing existing post
 		if ( 'post.php' === $pagenow && isset( $_GET['post'] ) && 'drsa_ad' === get_post_type( sanitize_text_field( $_GET['post'] ) ) ) {
@@ -111,4 +112,12 @@ class Dude_Really_Simple_Ads {
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'admin/extending-class-palces.php';
 		require plugin_dir_path( dirname( __FILE__ ) ) . 'public/extending-class-show-ads.php';
 	} // end load_dependencies
+
+  public static function get_current_ad_end_mode() {
+    return apply_filters( 'drsa_end_ads_by_show_count', false );
+  } // end get_current_ad_edn_mode
+
+  public static function allow_alternative_image() {
+    return apply_filters( 'drsa_allow_alternative_image', false );
+  } // end allow_alternative_image
 } // end class

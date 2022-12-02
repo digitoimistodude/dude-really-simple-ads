@@ -140,4 +140,29 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 
 		return $actions;
 	} // end remove_quick_edit
+
+  public static function init_data_table() {
+    if ( ! empty( get_option( 'wp_drsa_ad_data_created' ) ) ) {
+      return;
+    }
+
+    global $wpdb;
+    $charset_collate = $wpdb->get_charset_collate();
+
+    $sql = "CREATE TABLE wp_drsa_ad_data  (
+      `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+      `ad_id` bigint(20) DEFAULT NULL,
+      `date` date DEFAULT NULL,
+      `page` varchar(128) DEFAULT NULL,
+      `place` varchar(128) DEFAULT NULL,
+      `show_count` bigint(20) DEFAULT NULL,
+      `click_count` bigint(20) DEFAULT NULL,
+      PRIMARY KEY (`id`)
+    ) {$charset_collate};";
+
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+
+    update_option( 'wp_drsa_ad_data_created', wp_date( 'Y-m-d H:i:s' ) );
+  } // end init_data_table
 } // end class
