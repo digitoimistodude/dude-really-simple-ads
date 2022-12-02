@@ -333,11 +333,12 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
 			</tr>
 
 			<?php foreach ( $ad_data as $row ) :
-        $ad_place_and_order = explode( '-order-', $row->place );
+				$ad_place_and_order = explode( '-order-', $row->place );
+        $ad_place_title = isset( $all_places[ $ad_place_and_order[0] ]['name'] ) ? $all_places[ $ad_place_and_order[0] ]['name'] : $ad_place_and_order[0];
         if ( 1 < count( $ad_place_and_order ) ) {
-          $place_text = $all_places[ $ad_place_and_order[0] ]['name'] . ', ' . $ad_place_and_order[1];
+          $place_text = $ad_place_title . ', ' . $ad_place_and_order[1];
         } else {
-          $place_text = $all_places[ $ad_place_and_order[0] ]['name'];
+          $place_text = $ad_place_title;
         }
         ?>
 				<tr>
