@@ -30,7 +30,7 @@ class Dude_Really_Simple_Ads {
 
 	public function __construct() {
 		$this->plugin_name = 'dude-really-simple-ads';
-		$this->version = '1.1.5';
+		$this->version = '1.1.6';
 	} // end __construct
 
 	/**
