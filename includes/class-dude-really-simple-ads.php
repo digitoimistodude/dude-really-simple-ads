@@ -81,6 +81,7 @@ class Dude_Really_Simple_Ads {
 
 		// These hooks are that essential that we require them in every view
 		add_action( 'save_post_drsa_ad', array( 'DRSA_Admin_Hooks', 'validate_feature_image_size' ), 10, 3 );
+		add_action( 'save_post_drsa_ad', array( 'DRSA_Admin_Hooks', 'create_empty_meta_show_counter' ), 10, 3 );
 		add_filter( 'post_row_actions', array( 'DRSA_Admin_Hooks', 'remove_quick_edit' ), 10, 2 );
     add_action( 'admin_init', [ 'DRSA_Admin_Hooks', 'init_data_table' ] );
 
