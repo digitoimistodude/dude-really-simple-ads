@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.1.6]
+### Fixed
+- Showing `multiple` ad places, create empty show count when post gets updated
+
 ## [1.1.5]
 ### Changed
 - Only count ad view once it is visible in the viewport
