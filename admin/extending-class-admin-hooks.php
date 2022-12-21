@@ -99,6 +99,15 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 		// Checks passed, validate ad
 		update_post_meta( $post_id, '_drsa_ad_show', 'true' );
 	} // end validate_feature_image_size
+	
+	 public static function create_empty_meta_show_counter( $post_id ) {
+	    $exists = get_post_meta( $post_id, '_drsa_campaing_show_counter', true );
+	    if ( $exists ) {
+	      return;
+	    }
+
+	    add_post_meta( $post_id, '_drsa_campaing_show_counter', '0' );
+	  } // end create_empty_meta_show_counter
 
 	/**
 	 * Maybe show admin notice when editing drsa_ad.
