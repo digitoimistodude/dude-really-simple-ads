@@ -49,7 +49,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 
     $place_data = DRSA_Places::get_ad_placements()[ $place ];
     if ( isset( $place_data['multiple'] ) && true === $place_data['multiple'] ) {
-      $query_args['orderby'] = 'meta_value_num';
+      $query_args['orderby'] = 'rand meta_value_num';
       $query_args['meta_key'] = '_drsa_campaing_show_counter';
       $query_args['order'] = 'ASC';
       $query_args['post__not_in'] = isset( DRSA_Show_Ads::$ads_shown[ $place ] ) ? DRSA_Show_Ads::$ads_shown[ $place ] : [];
@@ -57,7 +57,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
       $query_args['orderby'] = 'rand';
     }
 
-    if ( false === Dude_Really_Simple_Ads::get_current_ad_end_mode() ) {
+    if ( false === Dude_Really_Simple_Ads::ad_visibility_by_show_count() ) {
       $query_args['meta_query'][] = [
         'key'			=> '_drsa_ad_timing_end_date',
         'value' 	=> current_time( 'timestamp' ),
@@ -73,14 +73,6 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 		  while ( $query->have_posts() ) :
 				$query->the_post();
 				$post_id = get_the_id();
-
-        if ( true === Dude_Really_Simple_Ads::get_current_ad_end_mode() ) {
-          $post_show_count = get_post_meta( $post_id, '_drsa_campaing_show_counter', true );
-          $post_show_count_limit = get_post_meta( $post_id, '_drsa_ad_timing_end_view_count', true );
-          if ( $post_show_count >= $post_show_count_limit ) {
-            continue;
-          }
-        }
 
         DRSA_Show_Ads::$ads_shown[ $place ][] = get_the_ID();
 
@@ -242,6 +234,14 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 
 		$i++;
 		update_post_meta( $ad, $meta_key, $i );
+
+    // If ads are shown by count and count goes over the limit, disable ad to prevent it being shown again
+    if ( '_drsa_campaing_show_counter' === $meta_key && Dude_Really_Simple_Ads::ad_visibility_by_show_count() ) {
+      $post_show_count_limit = get_post_meta( $ad, '_drsa_ad_timing_end_view_count', true );
+      if ( $i >= $post_show_count_limit ) {
+        delete_post_meta( $ad, '_drsa_ad_show' );
+      }
+    }
 
     global $wpdb;
     $ad_data = [

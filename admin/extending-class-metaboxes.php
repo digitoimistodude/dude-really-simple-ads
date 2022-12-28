@@ -39,7 +39,7 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
 			)
 		);
 
-    $cmb->add_field(
+    $cmb->add_field( apply_filters( 'drsa_field_start_date',
 			array(
 				'name'				=> __( 'Näyttöaika alkaa', 'dude-really-simple-ads' ),
 				'id'					=> $prefix . '_start_date',
@@ -47,10 +47,10 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
 				'date_format'	=> 'd.m.Y',
 				'time_format'	=> 'H:i',
 			)
-		);
+		) );
 
-    if ( true === Dude_Really_Simple_Ads::get_current_ad_end_mode() ) {
-      $cmb->add_field(
+    if ( true === Dude_Really_Simple_Ads::ad_visibility_by_show_count() ) {
+      $cmb->add_field( apply_filters( 'drsa_field_end_view_count',
         [
           'name'				=> __( 'Näyttökertojen yläraja', 'dude-really-simple-ads' ),
           'id'					=> $prefix . '_end_view_count',
@@ -60,9 +60,9 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
             'pattern' => '\d*',
           ],
         ]
-        );
+      ) );
     } else {
-      $cmb->add_field(
+      $cmb->add_field( apply_filters( 'drsa_field_end_date',
         array(
           'name'				=> __( 'ja loppuu', 'dude-really-simple-ads' ),
           'id'					=> $prefix . '_end_date',
@@ -70,7 +70,7 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
           'date_format'	=> 'd.m.Y',
           'time_format' => 'H:i',
         )
-      );
+      ) );
     }
 
     $prefix = '_drsa_ad_placement';
@@ -79,28 +79,28 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
 		if ( empty( $options ) ) {
 			add_action( 'admin_notices', array( 'DRSA_Admin_Hooks', 'admin_notice_no_ad_placements' ) );
 		} else {
-	    $cmb->add_field(
+	    $cmb->add_field( apply_filters( 'drsa_field_placement',
 				array(
 					'name'				=> __( 'Käytä mainospaikalla', 'dude-really-simple-ads' ),
 					'id'					=> $prefix,
 					'type'				=> 'select',
 					'options_cb'	=> array( 'DRSA_Places', 'get_ad_placement_options' ),
 				)
-			);
+			) );
 		}
 
 		$prefix = '_drsa_ad_target_url';
-		$cmb->add_field(
+		$cmb->add_field( apply_filters( 'drsa_field_target_url',
 			array(
 				'name'				=> __( 'Mainoksen kohde', 'dude-really-simple-ads' ),
 				'id'					=> $prefix,
 				'type'				=> 'text_url',
 				'protocols'		=> array( 'http', 'https' ),
 			)
-		);
+		) );
 
     if ( true === Dude_Really_Simple_Ads::allow_alternative_image() ) {
-      $cmb->add_field( [
+      $cmb->add_field( apply_filters( 'drsa_field_alternative_image', [
         'name' => __( 'Vaihtoehtoinen kuva', 'dude-really-simple-ads' ),
         'description' => apply_filters( 'drsa_alternative_image_desctiption_text', '' ),
         'id'   => '_drsa_alternative_image',
@@ -111,7 +111,7 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
         'text' => [
           'add_upload_file_text' => apply_filters( 'drsa_alternative_image_button_text', __( 'Lisää kuva', 'dude-really-simple-ads' ) ),
         ],
-      ] );
+      ] ) );
     }
 	} // end add_ad_metabox
 
@@ -333,12 +333,11 @@ class DRSA_Metaboxes extends Dude_Really_Simple_Ads {
 			</tr>
 
 			<?php foreach ( $ad_data as $row ) :
-				$ad_place_and_order = explode( '-order-', $row->place );
-        $ad_place_title = isset( $all_places[ $ad_place_and_order[0] ]['name'] ) ? $all_places[ $ad_place_and_order[0] ]['name'] : $ad_place_and_order[0];
+        $ad_place_and_order = explode( '-order-', $row->place );
         if ( 1 < count( $ad_place_and_order ) ) {
-          $place_text = $ad_place_title . ', ' . $ad_place_and_order[1];
+          $place_text = $all_places[ $ad_place_and_order[0] ]['name'] . ', ' . $ad_place_and_order[1];
         } else {
-          $place_text = $ad_place_title;
+          $place_text = $all_places[ $ad_place_and_order[0] ]['name'];
         }
         ?>
 				<tr>

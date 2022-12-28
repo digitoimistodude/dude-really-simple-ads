@@ -17,6 +17,10 @@ class DRSA_Taxonomy extends Dude_Really_Simple_Ads {
 	 * @version 0.1.0
 	 */
 	public function run() {
+    if ( ! Dude_Really_Simple_Ads::enable_campaigns() ) {
+      return;
+    }
+
 		add_action( 'init', array( $this, 'register_taxonomy' ) );
 		add_filter( 'manage_edit-drsa_campaigns_columns', array( $this, 'list_columns' ) );
 		add_action( 'manage_drsa_campaigns_custom_column', array( $this, 'list_columns_content' ), 10, 3 );

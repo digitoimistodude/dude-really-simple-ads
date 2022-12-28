@@ -16,6 +16,10 @@ class DRSA_Places extends Dude_Really_Simple_Ads {
 
 		foreach ( $places as $place_key => $place ) {
 			if ( array_key_exists( 'name', $place ) ) {
+        if ( is_array( $places[ $place_key ]['height'] ) ) {
+          asort( $places[ $place_key ]['height'] );
+        }
+
 				$options[ $place['id'] ] = $places[ $place_key ];
 			}
 		}
@@ -30,6 +34,10 @@ class DRSA_Places extends Dude_Really_Simple_Ads {
 		foreach ( $places as $place_key => $place ) {
 			if ( array_key_exists( 'name', $place ) ) {
 				if ( $show_size ) {
+          if ( is_array( $place['height'] ) ) {
+            $place['height'] = implode( '/', $place['height'] );
+          }
+
 					$options[ $place_key ] = $place['name'] . ' (' . $place['width'] . 'x' . $place['height'] . 'px)';
 				} else {
 					$options[ $place_key ] = $place['name'];

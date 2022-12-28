@@ -109,16 +109,22 @@ class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 		 * Merge our custom columns with rest of default ones, and re-set column for
 		 * drsa_campaigns in new position.
 		 */
-		return array_merge( $columns,
+		$columns = array_merge( $columns,
 	  	array(
 				'drsa_timing_start'				=> __( 'Näyttö alkaa', 'dude-really-simple-ads' ),
-				'drsa_timing_end'					=> Dude_Really_Simple_Ads::get_current_ad_end_mode() ? __( 'Näyttökertojen yläraja', 'dude-really-simple-ads' ) : __( 'Näyttö loppuu', 'dude-really-simple-ads' ),
+				'drsa_timing_end'					=> Dude_Really_Simple_Ads::ad_visibility_by_show_count() ? __( 'Näyttökertojen yläraja', 'dude-really-simple-ads' ) : __( 'Näyttö loppuu', 'dude-really-simple-ads' ),
 				'drsa_placement'					=> __( 'Mainospaikka', 'dude-really-simple-ads' ),
-				'taxonomy-drsa_campaigns'	=> __( 'Mainoskampanja', 'dude-really-simple-ads' ),
+        'taxonomy-drsa_campaigns' => __( 'Kampanja', 'dude-really-simple-ads' ),
 				'drsa_stats'							=> __( 'Luvut', 'dude-really-simple-ads' ),
 				'drsa_src'								=> __( 'Esikatselu', 'dude-really-simple-ads' ),
 			)
 		);
+
+    if ( ! Dude_Really_Simple_Ads::enable_campaigns() ) {
+      unset( $columns['taxonomy-drsa_campaigns'] );
+    }
+
+    return $columns;
 	} // end list_columns
 
 	/**
@@ -140,7 +146,7 @@ class DRSA_Post_Type extends Dude_Really_Simple_Ads {
 				break;
 
 			case 'drsa_timing_end':
-        if ( true === Dude_Really_Simple_Ads::get_current_ad_end_mode() ) {
+        if ( true === Dude_Really_Simple_Ads::ad_visibility_by_show_count() ) {
           $count = get_post_meta( $post_id, '_drsa_ad_timing_end_view_count', true );
 
           echo esc_html( empty( $count ) ? '-' : $count );

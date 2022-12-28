@@ -14,8 +14,7 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 	 * @version 0.1.0
 	 */
 	public static function reorder_metaboxes() {
-		add_meta_box( 'postimagediv', __( 'Mainos', 'dude-really-simple-ads' ), 'post_thumbnail_meta_box', 'drsa_ad', 'side', 'high' );
-		add_meta_box( 'drsa_campaignsdiv', __( 'Kampanjat', 'dude-really-simple-ads' ), 'post_categories_meta_box', 'drsa_ad', 'normal', 'low', array( 'taxonomy' => 'drsa_campaigns' ) );
+		add_meta_box( 'postimagediv', __( 'Mainos', 'dude-really-simple-ads' ), 'post_thumbnail_meta_box', 'drsa_ad', 'normal', 'high' );
 		add_meta_box( 'authordiv', __( 'Author', 'dude-really-simple-ads' ), 'post_author_meta_box', 'drsa_ad', 'side', 'low' );
 	} // end reorder_metaboxes
 
@@ -29,9 +28,19 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 	 */
 	public static function change_featured_image_links( $content ) {
 		// @codingStandardsIgnoreStart
-		$content = str_replace( __( 'Set featured image' ), __( 'Lisää mainoksen sisältö', 'dude-really-simple-ads' ), $content );
-		$content = str_replace( __( 'Remove featured image' ), __( 'Poista mainoksen sisältö', 'dude-really-simple-ads' ), $content );
-		$content = str_replace( __( 'Click the image to edit or update' ), '', $content );
+		$content = str_replace(
+      [ __( 'Set featured image' ), 'Aseta artikkelikuva' ],
+      __( 'Lisää mainosbanneri', 'dude-really-simple-ads' ),
+      $content
+    );
+
+    $content = str_replace(
+      [ __( 'Remove featured image' ), 'Poista artikkelikuva' ],
+      __( 'Poista mainosbanneri', 'dude-really-simple-ads' ),
+      $content
+    );
+
+    $content = str_replace( __( 'Click the image to edit or update' ), '', $content );
 		// @codingStandardsIgnoreEnd
 
 		return $content;
@@ -68,13 +77,13 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
     // @codingStandardsIgnoreStart
 		// Invalidate ad if there's no image
 		if ( ! array_key_exists( '_thumbnail_id', $_POST ) || ! is_numeric( $_POST['_thumbnail_id'] ) ) {
-			delete_post_meta( $post_id, '_drsa_ad_show' );
+      update_post_meta( $post_id, '_drsa_ad_size_valid', false );
 			return;
 		}
 
 		// Invalidate ad if there's no place selected
 		if ( ! array_key_exists( '_drsa_ad_placement', $_POST ) ) {
-			delete_post_meta( $post_id, '_drsa_ad_show' );
+      update_post_meta( $post_id, '_drsa_ad_size_valid', false );
 			return;
 		}
 
@@ -87,27 +96,62 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 		$image_metadata = get_post_meta( $image_id, '_wp_attachment_metadata', true );
 		// @codingStandardsIgnoreEnd
 
-		/**
-		 * Check image size against selected ad place size definitions, Invalidate
-		 * ad if those are different.
-		 */
-		if ( $places[ $ad_placement ]['width'] !== $image_metadata['width'] || $places[ $ad_placement ]['height'] !== $image_metadata['height'] ) {
-			delete_post_meta( $post_id, '_drsa_ad_show' );
-			return;
-		}
+    /**
+     * Check image size against selected ad place size definitions.
+     * Validate the ad if size matches.
+     * First check if place has multiple allowed heights and run checks
+     * against each one of those. If one matches, validate the ad.
+     */
+    if ( is_array( $places[ $ad_placement ]['height'] ) ) {
+      foreach ( $places[ $ad_placement ]['height'] as $height ) {
+        if ( $places[ $ad_placement ]['width'] === $image_metadata['width'] && $height === $image_metadata['height'] ) {
+          update_post_meta( $post_id, '_drsa_ad_size_valid', true );
+          return;
+        }
+      }
+    } else {
+      if ( $places[ $ad_placement ]['width'] === $image_metadata['width'] && $places[ $ad_placement ]['height'] === $image_metadata['height'] ) {
+        update_post_meta( $post_id, '_drsa_ad_size_valid', true );
+        return;
+      }
+    }
 
-		// Checks passed, validate ad
-		update_post_meta( $post_id, '_drsa_ad_show', 'true' );
+		// Checks didn't pass, invalidate ad
+    update_post_meta( $post_id, '_drsa_ad_size_valid', false );
 	} // end validate_feature_image_size
-	
-	 public static function create_empty_meta_show_counter( $post_id ) {
-	    $exists = get_post_meta( $post_id, '_drsa_campaing_show_counter', true );
-	    if ( $exists ) {
-	      return;
-	    }
 
-	    add_post_meta( $post_id, '_drsa_campaing_show_counter', '0' );
-	  } // end create_empty_meta_show_counter
+  public static function update_show_status( $meta_id, $post_id, $meta_key, $meta_value ) {
+    if ( '_drsa_ad_timing_end_view_count' !== $meta_key ) {
+      return;
+    }
+
+    $valid = get_post_meta( $post_id, '_drsa_ad_size_valid', true );
+    if ( ! $valid ) {
+      delete_post_meta( $post_id, '_drsa_ad_show' );
+      return;
+    }
+
+    if ( Dude_Really_Simple_Ads::ad_visibility_by_show_count() ) {
+      $post_show_count = get_post_meta( $post_id, '_drsa_campaing_show_counter', true );
+      $post_show_count_limit = $meta_value;
+
+      if ( $post_show_count >= $post_show_count_limit ) {
+        delete_post_meta( $post_id, '_drsa_ad_show' );
+        return;
+      }
+    }
+
+    update_post_meta( $post_id, '_drsa_ad_show', 'true' );
+  } // end update_show_status
+
+  public static function create_empty_meta_show_counter( $post_id ) {
+    $exists = get_post_meta( $post_id, '_drsa_campaing_show_counter', true );
+    if ( $exists ) {
+      return;
+    }
+
+    add_post_meta( $post_id, '_drsa_campaing_show_counter', '0' );
+  } // end create_empty_meta_show_counter
 
 	/**
 	 * Maybe show admin notice when editing drsa_ad.
@@ -123,9 +167,18 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 			return;
    	}
 
+    $valid = get_post_meta( get_the_id(), '_drsa_ad_size_valid', true );
+    if ( $valid ) {
+      return;
+    }
+
 		// Get possible ad places and selected one
 		$places = DRSA_Places::get_ad_placements();
 		$ad_placement = get_post_meta( get_the_id(), '_drsa_ad_placement', true );
+
+    if ( is_array( $places[ $ad_placement ]['height'] ) ) {
+      $places[ $ad_placement ]['height'] = implode( '/', $places[ $ad_placement ]['height'] );
+    }
 
 		// Show error notice containing right dimensions ?>
 	 	<div class="notice notice-error">

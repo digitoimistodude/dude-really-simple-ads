@@ -1,5 +1,5 @@
 # Really simple ads
-![version_1.1.0](https://img.shields.io/badge/Version-1.1.0-orange.svg) ![Tested_up_to WordPress_5.6](https://img.shields.io/badge/Tested_up_to-WordPress_5.6-blue.svg?style=flat-square) ![Compatible_with PHP_7.0](https://img.shields.io/badge/Compatible_with-PHP_7.0-green.svg?style=flat-square)
+![version_1.2.0](https://img.shields.io/badge/Version-1.2.0-orange.svg) ![Tested_up_to WordPress_5.6](https://img.shields.io/badge/Tested_up_to-WordPress_5.6-blue.svg?style=flat-square) ![Compatible_with PHP_7.0](https://img.shields.io/badge/Compatible_with-PHP_7.0-green.svg?style=flat-square)
 
 [Digitoimisto Dude Oy](https://www.dude.fi) is a Finnish boutique digital agency in the center of Jyväskylä.
 
@@ -51,9 +51,6 @@ function myprefix_register_ad_places() {
             // add size, uploaded image will be tested against these values
             'width'     => 480,
             'height'    => 480,
-            
-            // for having multiple ads in the same place, ads will be shown in the order of least shown to most shown
-            'multiple'  => true,
         ),
     );
 
@@ -143,14 +140,6 @@ If visitor reloads the page or visits in the same page again within 30 seconds a
 This is simple prevention to ensure that view count is somewhat accurate.
 
 Change the throttle time with filter `drsa_counter_cookie_timeout`, return thtrottle time in milliseconds. To disable the feature, return zero.
-
-### End ads display at specific amount of views
-Set filter `drsa_end_ads_by_show_count` to true, to switch ad ending from date to view count.
-
-### Allow alternative images for ads
-Set filter `drsa_allow_alternative_image` to true, to allow alternative images for ads.
-This will ad a alternative image field in ad edit screen.
-Use `drsa_alternative_image_desctiption_text` filter, to change the description of the field. Default ''.
 
 ## Changelog
 

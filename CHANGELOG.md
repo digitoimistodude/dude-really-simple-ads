@@ -5,9 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-## [1.1.6]
+## [1.2.0]
+### Added
+- boolean filter `drsa_enable_campaigns` to toggle campaign taxonomy visibility
+- `drsa_field_{$field}` filters to allow modifying cpt metabox field args
+- allow multiple heights for same ad place
+
 ### Fixed
-- Showing `multiple` ad places, create empty show count when post gets updated
+- truly randomise ad places with multiple ads allowed, only fallback to order by show count
+- init the plugin codebase on `after_setup_theme` action
+- logic behind how ad visibility is determined
 
 ## [1.1.5]
 ### Changed

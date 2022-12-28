@@ -3,11 +3,11 @@
  * Plugin Name: Really simple ads
  * Plugin URL: https://www.dude.fi
  * Description: A simple way to manage, track and show ads
- * Version: 1.1.6
+ * Version: 1.2.0
  * Author: Digitoimisto Dude Oy, Timi Wahalahti
  * Author URL: https://www.dude.fi
  * Requires at least: 4.6
- * Tested up to: 5.6
+ * Tested up to: 6.1
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  *
@@ -36,5 +36,5 @@ if ( ! function_exists( 'run_drsa' ) ) {
 		$plugin->run();
 	} // end run_drsa
 
-	run_drsa();
+	add_action( 'after_setup_theme', 'run_drsa' );
 }
