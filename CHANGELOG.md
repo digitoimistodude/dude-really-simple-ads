@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - allow multiple heights for same ad place
 
 ### Fixed
+- showing `multiple` ad places, create empty show count when post gets updated
 - truly randomise ad places with multiple ads allowed, only fallback to order by show count
 - init the plugin codebase on `after_setup_theme` action
 - logic behind how ad visibility is determined
