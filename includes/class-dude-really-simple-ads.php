@@ -30,7 +30,7 @@ class Dude_Really_Simple_Ads {
 
 	public function __construct() {
 		$this->plugin_name = 'dude-really-simple-ads';
-		$this->version = '1.1.5';
+		$this->version = '1.2.1';
 	} // end __construct
 
 	/**
@@ -83,6 +83,7 @@ class Dude_Really_Simple_Ads {
 		add_action( 'save_post_drsa_ad', array( 'DRSA_Admin_Hooks', 'validate_feature_image_size' ), 10, 3 );
     add_action( 'save_post_drsa_ad', array( 'DRSA_Admin_Hooks', 'create_empty_meta_show_counter' ), 10, 3 );
     add_action( 'updated_post_meta', array( 'DRSA_Admin_Hooks', 'update_show_status' ), 10, 4 );
+    add_action( 'added_post_meta', array( 'DRSA_Admin_Hooks', 'update_show_status' ), 10, 4 );
 		add_filter( 'post_row_actions', array( 'DRSA_Admin_Hooks', 'remove_quick_edit' ), 10, 2 );
     add_action( 'admin_init', [ 'DRSA_Admin_Hooks', 'init_data_table' ] );
 

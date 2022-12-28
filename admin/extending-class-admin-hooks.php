@@ -146,7 +146,7 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 
   public static function create_empty_meta_show_counter( $post_id ) {
     $exists = get_post_meta( $post_id, '_drsa_campaing_show_counter', true );
-    if ( $exists ) {
+    if ( $exists || '0' === $exists  ) {
       return;
     }
 

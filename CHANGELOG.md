@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.2.1]
+### Fixed
+- creation of empty show counter meta
+- ad show status check hooked also to filter `update_show_status`
+
 ## [1.2.0]
 ### Added
 - boolean filter `drsa_enable_campaigns` to toggle campaign taxonomy visibility

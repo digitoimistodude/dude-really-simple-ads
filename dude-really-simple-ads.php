@@ -3,7 +3,7 @@
  * Plugin Name: Really simple ads
  * Plugin URL: https://www.dude.fi
  * Description: A simple way to manage, track and show ads
- * Version: 1.2.0
+ * Version: 1.2.1
  * Author: Digitoimisto Dude Oy, Timi Wahalahti
  * Author URL: https://www.dude.fi
  * Requires at least: 4.6
