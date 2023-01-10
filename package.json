@@ -1,6 +1,6 @@
 {
   "name": "dude-really-simple-ads",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A simple way to manage, track and show ads ",
   "main": "dude-really-simple-ads.php",
   "dependencies": {},

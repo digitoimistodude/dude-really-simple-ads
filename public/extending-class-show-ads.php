@@ -201,7 +201,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 	public static function build_target_with_utm( $ad = null, $from = 'single', $place = null ) {
 		if ( empty( $ad ) || empty( $place ) ) {
 			return;
-        }
+    }
 
 		$utm = array();
 		$utm['utm_source'] = apply_filters( 'drsa_utm_source', sanitize_title( get_bloginfo( 'page_name' ) ) );
@@ -213,6 +213,17 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 		} else {
 			$utm['utm_campaign'] = $ad['slug'];
 		}
+
+    // Get possibly existing utm tags
+    $parts = parse_url( $ad['target'] );
+    parse_str( $parts['query'], $existing_utm );
+
+    // Remove forced utm tags if already in url
+    foreach ( $utm as $k => $v ) {
+      if ( array_key_exists( $k, $existing_utm ) ) {
+        unset( $utm[ $k ] );
+      }
+    }
 
 		return add_query_arg( $utm, $ad['target'] );
 
