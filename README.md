@@ -1,3 +1,6 @@
+> **Note**
+This ad plugin is considered legacy. You should really consider using [air-ads](https://github.com/digitoimistodude/air-ads).
+
 # Really simple ads
 ![version_1.2.2](https://img.shields.io/badge/Version-1.2.2-orange.svg) ![Tested_up_to WordPress_5.6](https://img.shields.io/badge/Tested_up_to-WordPress_5.6-blue.svg?style=flat-square) ![Compatible_with PHP_7.0](https://img.shields.io/badge/Compatible_with-PHP_7.0-green.svg?style=flat-square)
 
