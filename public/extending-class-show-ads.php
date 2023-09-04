@@ -26,7 +26,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 
     $query_args = array(
       'post_type'				=> 'drsa_ad',
-      'post_status'			=> 'public',
+      'post_status'			=> 'publish',
       'posts_per_page'	=> 1,
       'no_found_rows' 	=> true,
       'meta_query'			=> array(
@@ -97,7 +97,7 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 		$query = new WP_Query(
 			array(
 				'post_type'				=> 'drsa_ad',
-				'post_status'			=> 'public',
+				'post_status'			=> 'publish',
 				'posts_per_page'	=> 1,
 				'no_found_rows' 	=> true,
 				'orderby'					=> 'rand',

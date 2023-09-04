@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 ### Fixed
 - Check if ad is allowed to be shown also when the post is saved. This prevents some odd situstions.
+- Fix the post status on ad get functions.
 
 ## [1.2.2]
 ### Fixed
