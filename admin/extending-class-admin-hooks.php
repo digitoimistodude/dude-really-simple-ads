@@ -120,11 +120,12 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
     update_post_meta( $post_id, '_drsa_ad_size_valid', false );
 	} // end validate_feature_image_size
 
-  public static function update_show_status( $meta_id, $post_id, $meta_key, $meta_value ) {
-    if ( '_drsa_ad_timing_end_view_count' !== $meta_key ) {
-      return;
-    }
-
+  /**
+   * Internal function used by:
+   * - update_show_status_on_post_save
+   * - update_show_status_on_meta_save
+   */
+  public static function update_show_status( $post_id, $post_show_count_limit = null ) {
     $valid = get_post_meta( $post_id, '_drsa_ad_size_valid', true );
     if ( ! $valid ) {
       delete_post_meta( $post_id, '_drsa_ad_show' );
@@ -133,7 +134,10 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 
     if ( Dude_Really_Simple_Ads::ad_visibility_by_show_count() ) {
       $post_show_count = get_post_meta( $post_id, '_drsa_campaing_show_counter', true );
-      $post_show_count_limit = $meta_value;
+
+      if ( empty( $post_show_count_limit ) ) {
+        $post_show_count_limit = get_post_meta( $post_id, '_drsa_ad_timing_end_view_count', true );
+      }
 
       if ( $post_show_count >= $post_show_count_limit ) {
         delete_post_meta( $post_id, '_drsa_ad_show' );
@@ -143,6 +147,23 @@ class DRSA_Admin_Hooks extends Dude_Really_Simple_Ads {
 
     update_post_meta( $post_id, '_drsa_ad_show', 'true' );
   } // end update_show_status
+
+  public static function update_show_status_on_post_save( $post_id ) {
+    // Bail out if this is an autosave
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+      return;
+    }
+
+    DRSA_Admin_Hooks::update_show_status( $post_id );
+  } // end update_show_status_on_post_save
+
+  public static function update_show_status_on_meta_save( $meta_id, $post_id, $meta_key, $meta_value ) {
+    if ( '_drsa_ad_timing_end_view_count' !== $meta_key ) {
+      return;
+    }
+
+    DRSA_Admin_Hooks::update_show_status( $post_id, $meta_value );
+  } // end update_show_status_on_meta_save
 
   public static function create_empty_meta_show_counter( $post_id ) {
     $exists = get_post_meta( $post_id, '_drsa_campaing_show_counter', true );
