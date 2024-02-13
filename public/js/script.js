@@ -61,6 +61,7 @@ function drsa_make_click_call( ad ) {
 
 function isInViewport(ad) {
   var element = document.querySelector(ad.click_counter_element);
+  if (!element) return false;
   var bounding = element.getBoundingClientRect();
 
   if (
