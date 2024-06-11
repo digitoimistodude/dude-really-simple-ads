@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.2.4]
+### Fixed
+- Additional checks for image sizes, to prevent PHP errors when image is not set
+
 ## [1.2.3]
 ### Fixed
 - Check if ad is allowed to be shown also when the post is saved. This prevents some odd situstions.
