@@ -47,7 +47,9 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
       ),
     );
 
-    $place_data = DRSA_Places::get_ad_placements()[ $place ];
+    // An unknown place key would otherwise be an undefined array key.
+    $ad_placements = DRSA_Places::get_ad_placements();
+    $place_data = isset( $ad_placements[ $place ] ) ? $ad_placements[ $place ] : array();
     if ( isset( $place_data['multiple'] ) && true === $place_data['multiple'] ) {
       $query_args['orderby'] = 'rand meta_value_num';
       $query_args['meta_key'] = '_drsa_campaing_show_counter';
@@ -327,7 +329,9 @@ if ( ! function_exists( 'get_the_active_ad' ) ) {
 			$ad['target'] = DRSA_Show_ads::build_target_with_utm( $ad, $from, $place );
     }
 
-    $place_data = DRSA_Places::get_ad_placements()[ $place ];
+    // An unknown place key would otherwise be an undefined array key.
+    $ad_placements = DRSA_Places::get_ad_placements();
+    $place_data = isset( $ad_placements[ $place ] ) ? $ad_placements[ $place ] : array();
     if ( isset( $place_data['multiple'] ) && true === $place_data['multiple'] ) {
       $place = "{$place}-order-" . count(DRSA_Show_Ads::$ads_shown[ $place ] );
     }
