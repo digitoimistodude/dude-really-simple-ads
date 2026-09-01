@@ -214,9 +214,13 @@ class DRSA_Show_Ads extends Dude_Really_Simple_Ads {
 			$utm['utm_campaign'] = $ad['slug'];
 		}
 
-    // Get possibly existing utm tags
+    // Get possibly existing utm tags. parse_url() only returns a query key
+    // when the target url actually carries a query string.
     $parts = parse_url( $ad['target'] );
-    parse_str( $parts['query'], $existing_utm );
+    $existing_utm = [];
+    if ( ! empty( $parts['query'] ) ) {
+      parse_str( $parts['query'], $existing_utm );
+    }
 
     // Remove forced utm tags if already in url
     foreach ( $utm as $k => $v ) {
